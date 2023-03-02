@@ -9,8 +9,74 @@
   <link rel="stylesheet" href="./style.css">
   <title>Место</title>
 </head>
-<body>
-  <p>Hello, World</p>
+<body class="page">
+  <div class="wrapper">
+    <header class="header page-center">
+      <img src="./images/logo/logo.svg" alt="логотип" class="header__logo">
+    </header>
+    <main class="main page-center">
+      <section class="profile">
+        <img src="./images/avatar.jpg" alt="фотография героя" class="profile__avatar">
+        <div class="profile__inner">
+          <h1 class="profile__title">Жак-Ив Кусто</h1>
+          <p class="profile__subtitle">Исследователь океана</p>
+          <button class="profile__btn-edit"><img src="./images/icon/edit.svg" alt="карандаш" class="profile__pic-edit">
+          </button>
+        </div>
+        <button class="profile__btn-add"><img src="./images/icon/add.svg" alt="добавить" class="profile__pic">
+        </button>
+      </section>
+      <section class="elements">
+        <ul class="elements__grid">
+          <li class="elements__item">
+            <img src="./images/karachaevck.jpg" alt="Монастырь" class="elements__img">
+            <div class="elements__inner">
+              <h2 class="elements__title">Карачаевск</h2>
+              <button class="elements__btn"><img src="./images/icon/heart.svg" alt="лайк" class="elements__pic"></button>
+            </div>
+          </li>
+          <li class="elements__item">
+            <img src="./images/elbrus.jpg" alt="Эльбрус" class="elements__img">
+            <div class="elements__inner">
+              <h2 class="elements__title">Гора Эльбрус</h2>
+              <button class="elements__btn"><img src="./images/icon/heart.svg" alt="лайк" class="elements__pic"></button>
+            </div>
+          </li>
+          <li class="elements__item">
+            <img src="./images/dombay.jpg" alt="Горы Домбая" class="elements__img">
+            <div class="elements__inner">
+              <h2 class="elements__title">Домбай</h2>
+              <button class="elements__btn"><img src="./images/icon/heart.svg" alt="лайк" class="elements__pic"></button>
+            </div>
+          </li>
+          <li class="elements__item">
+            <img src="./images/arhiz.jpg" alt="Горы Архыза" class="elements__img">
+            <div class="elements__inner">
+              <h2 class="elements__title">Архыз</h2>
+              <button class="elements__btn"><img src="./images/icon/heart.svg" alt="лайк" class="elements__pic"></button>
+            </div>
+          </li>
+          <li class="elements__item">
+            <img src="./images/nord_osetia.jpg" alt="Родовая башня" class="elements__img">
+            <div class="elements__inner">
+              <h2 class="elements__title">Северная Осетия</h2>
+              <button class="elements__btn"><img src="./images/icon/heart.svg" alt="лайк" class="elements__pic"></button>
+            </div>
+          </li>
+          <li class="elements__item">
+            <img src="./images/geleznvodsk.jpg" alt="Железноводск" class="elements__img">
+            <div class="elements__inner">
+              <h2 class="elements__title">Кавказские Минеральные воды</h2>
+              <button class="elements__btn"><img src="./images/icon/heart.svg" alt="лайк" class="elements__pic"></button>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </main>
+    <footer class="footer page-center">
+      <p class="footer_copyright">&copy;&nbsp;2020 Mesto Russia</p>
+    </footer>
+  </div>
 
   <script src="./script.js"></script>
 </body>
