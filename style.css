@@ -29,7 +29,6 @@
 @media screen and (max-width: 920px) {
   .header {
     padding-left: 19px;
-    /* padding-right: 19px; */
   }
 }
 
@@ -259,7 +258,7 @@
 
 .elements__title {
   margin: 0;
-  padding-right: 25px;
+  padding-right: 10px;
   font-size: 24px;
   font-weight: 900;
   line-height: 1.2;
@@ -272,9 +271,11 @@
 .elements__btn {
   width: 22px;
   height: 19px;
+  flex-shrink: 0;
   padding: 0;
   background-color: transparent;
   border: none;
+  background-image: url(./images/icon/heart.svg);
   transition: opacity .3s linear;
 }
 
@@ -283,9 +284,13 @@
   cursor: pointer;
 }
 
-.elements__pic {
-  fill: rgb(75, 7, 7);
-  /* stroke: red; */
+.elements__btn:focus {
+  outline: none;
+  opacity: .5;
+}
+
+.elements__btn_like {
+  background-image: url(./images/icon/like.svg);
 }
 
 /*------------Start Footer------------*/
