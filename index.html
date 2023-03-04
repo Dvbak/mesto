@@ -4,17 +4,15 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./vendor/normalize.css">
-  <link rel="stylesheet" href="./vendor/fonts.css">
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./pages/index.css">
   <title>Место</title>
 </head>
 <body class="page">
   <div class="wrapper">
-    <header class="header page-center">
+    <header class="header page__center">
       <img src="./images/logo/logo.svg" alt="логотип" class="header__logo">
     </header>
-    <main class="main page-center">
+    <main class="main page__center">
       <section class="profile">
         <img src="./images/avatar.jpg" alt="фотография героя" class="profile__avatar">
         <div class="profile__inner">
@@ -73,11 +71,10 @@
         </ul>
       </section>
     </main>
-    <footer class="footer page-center">
-      <p class="footer_copyright">&copy;&nbsp;2020 Mesto Russia</p>
+    <footer class="footer page__center">
+      <p class="footer__copyright">&copy;&nbsp;2020 Mesto Russia</p>
     </footer>
   </div>
-
   <div class="popup">
     <div class="popup__container">
       <h1 class="popup__title">Редактировать профиль</h1>
@@ -86,7 +83,7 @@
         <input type="text" name="about" value="" class="popup__input-about">
         <button type="submit" class="popup__submit">Сохранить</button>
       </form>
-      <button class="popup__closed"><img src="./images/icon/close Icon.svg" alt="закрыть всплывающее окно" class="popup__pic-closed"></button>
+      <button class="popup__closed"><img src="./images/icon/close_icon.svg" alt="закрыть всплывающее окно" class="popup__pic-closed"></button>
     </div>
   </div>
   <script src="./script.js"></script>

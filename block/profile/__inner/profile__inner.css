@@ -1,0 +1,14 @@
+.profile__inner {
+  flex-grow: 1;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: repeat(2, 1fr);
+  align-items: center;
+  justify-items: start;
+}
+@media screen and (max-width: 635px) {
+  .profile__inner {
+    padding-bottom: 36px;
+  }
+}
