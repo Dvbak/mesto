@@ -2,10 +2,10 @@
   margin: 0;
   padding-right: 18px;
   padding-top: 16px;
+  align-self: start;
   font-size: 18px;
   font-weight: 400;
   line-height: 1.2;
-  align-self: start;
 }
 
 @media screen and (max-width: 720px) {
@@ -17,7 +17,7 @@
 @media screen and (max-width: 635px) {
   .profile__subtitle {
     padding-top: 14px;
-    padding-left: 16px;
+    padding-left: 40px;
     padding-right: 0;
     justify-self: center;
   }
