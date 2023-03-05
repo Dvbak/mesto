@@ -5,6 +5,7 @@
   background-color: transparent;
   border: 2px solid #fff;
   transition: opacity .3s linear;
+  border-radius: 2px;
 }
 
 .profile__btn-add:hover {
