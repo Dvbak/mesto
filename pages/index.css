@@ -19,6 +19,7 @@
 @import url(../blocks/profile/__btn-edit/profile__btn-edit.css);
 @import url(../blocks/profile/__pic-edit/profile__pic-edit.css);
 @import url(../blocks/profile/__btn-add/profile__btn-add.css);
+@import url(../blocks/profile/__pic-add/prifile__pic-add.css);
 
 /*------------Start Elements------------*/
 @import url(../blocks/elements/elements.css);
