@@ -18,10 +18,10 @@
         <div class="profile__inner">
           <h1 class="profile__title">Жак-Ив Кусто</h1>
           <p class="profile__subtitle">Исследователь океана</p>
-          <button class="profile__btn-edit"><img src="./images/icon/edit.svg" alt="карандаш" class="profile__pic-edit">
+          <button class="profile__btn-edit" type="button"><img src="./images/icon/edit.svg" alt="карандаш" class="profile__pic-edit">
           </button>
         </div>
-        <button class="profile__btn-add"><img src="./images/icon/add.svg" alt="добавить" class="profile__pic">
+        <button class="profile__btn-add" type="button"><img src="./images/icon/add.svg" alt="добавить" class="profile__pic">
         </button>
       </section>
       <section class="elements">
@@ -30,42 +30,42 @@
             <img src="./images/karachaevck.jpg" alt="Монастырь" class="elements__img">
             <div class="elements__inner">
               <h2 class="elements__title">Карачаевск</h2>
-              <button class="elements__btn"></button>
+              <button class="elements__btn" type="button"></button>
             </div>
           </li>
           <li class="elements__item">
             <img src="./images/elbrus.jpg" alt="Эльбрус" class="elements__img">
             <div class="elements__inner">
               <h2 class="elements__title">Гора Эльбрус</h2>
-              <button class="elements__btn"></button>
+              <button class="elements__btn" type="button"></button>
             </div>
           </li>
           <li class="elements__item">
             <img src="./images/dombay.jpg" alt="Горы Домбая" class="elements__img">
             <div class="elements__inner">
               <h2 class="elements__title">Домбай</h2>
-              <button class="elements__btn"></button>
+              <button class="elements__btn" type="button"></button>
             </div>
           </li>
           <li class="elements__item">
             <img src="./images/arhiz.jpg" alt="Горы Архыза" class="elements__img">
             <div class="elements__inner">
               <h2 class="elements__title">Архыз</h2>
-              <button class="elements__btn"></button>
+              <button class="elements__btn" type="button"></button>
             </div>
           </li>
           <li class="elements__item">
             <img src="./images/nord_osetia.jpg" alt="Родовая башня" class="elements__img">
             <div class="elements__inner">
               <h2 class="elements__title">Северная Осетия</h2>
-              <button class="elements__btn"></button>
+              <button class="elements__btn" type="button"></button>
             </div>
           </li>
           <li class="elements__item">
             <img src="./images/geleznvodsk.jpg" alt="Железноводск" class="elements__img">
             <div class="elements__inner">
               <h2 class="elements__title">Кавказские Минеральные воды</h2>
-              <button class="elements__btn"></button>
+              <button class="elements__btn" type="button"></button>
             </div>
           </li>
         </ul>
@@ -77,15 +77,17 @@
   </div>
   <div class="popup">
     <div class="popup__container">
-      <h1 class="popup__title">Редактировать профиль</h1>
-      <form action="#" class="popup__form">
-        <input type="text" name="name" value="" class="popup__input-name">
-        <input type="text" name="about" value="" class="popup__input-about">
+      <h2 class="popup__title">Редактировать профиль</h2>
+      <form action="#" class="popup__form" name="popupform">
+        <fieldset class="popup__field">
+          <input type="text" name="name" value="" class="popup__input">
+          <input type="text" name="about" value="" class="popup__input">
+        </fieldset>
         <button type="submit" class="popup__submit">Сохранить</button>
       </form>
-      <button class="popup__closed"><img src="./images/icon/close_icon.svg" alt="закрыть всплывающее окно" class="popup__pic-closed"></button>
+      <button class="popup__closed" type="button"><img src="./images/icon/close_icon.svg" alt="закрыть всплывающее окно" class="popup__pic-closed"></button>
     </div>
   </div>
-  <script src="./index.js"></script>
+  <script src="./scripts/index.js"></script>
 </body>
 </html>
