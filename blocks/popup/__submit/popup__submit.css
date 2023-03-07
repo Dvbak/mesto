@@ -16,13 +16,6 @@
   cursor: pointer;
 }
 
-.popup__submit:focus {
-  opacity: .8;
-  cursor: pointer;
-  outline: none;
-  transform: scale(1.1);
-}
-
 @media screen and (max-width: 635px) {
   .popup__submit {
     height: 46px;
