@@ -69,11 +69,21 @@ clonCardTemplate.querySelector('.elements__title').textContent = item.name;
 cardsGrid.append(clonCardTemplate);
 });
 
-const btnElements = document.querySelectorAll('.elements__btn');
-console.log(btnElements);
+const btnsLike = document.querySelectorAll('.elements__btn');
+console.log(btnsLike);
 
-btnElements.forEach(function(item) {
+btnsLike.forEach(function(item) {
   item.addEventListener('click', () =>
     item.classList.toggle('elements__btn_like') //в  данном случае более занимательно, нежели просто add
-  )
-})
+  );
+});
+
+const btnsDelet = document.querySelectorAll('.elements__btn-delet');
+console.log(btnsDelet);
+
+btnsDelet.forEach(function(item) {
+  item.addEventListener('click', function() {
+    elementsItem = item.closest('.elements__item');
+    elementsItem.remove();
+  });
+});
