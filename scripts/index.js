@@ -69,4 +69,11 @@ clonCardTemplate.querySelector('.elements__title').textContent = item.name;
 cardsGrid.append(clonCardTemplate);
 });
 
+const btnElements = document.querySelectorAll('.elements__btn');
+console.log(btnElements);
 
+btnElements.forEach(function(item) {
+  item.addEventListener('click', () =>
+    item.classList.toggle('elements__btn_like') //в  данном случае более занимательно, нежели просто add
+  )
+})
