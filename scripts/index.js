@@ -29,3 +29,44 @@ function handleFormSubmit(event) {
   profileAbout.textContent = inputAbout.value;
   closePopUp();
 }
+
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+const cardsGrid = document.querySelector('.elements__grid');
+const cardTemplate = cardsGrid.querySelector('#card').content;
+console.log(cardTemplate);
+
+initialCards.forEach(function(item) {
+let clonCardTemplate = cardTemplate.querySelector('.elements__item').cloneNode(true);
+console.log(clonCardTemplate);
+clonCardTemplate.querySelector('.elements__img').src = item.link;
+clonCardTemplate.querySelector('.elements__img').alt = item.name;
+clonCardTemplate.querySelector('.elements__title').textContent = item.name;
+cardsGrid.append(clonCardTemplate);
+});
+
+
