@@ -1,33 +1,42 @@
-const popUp = document.querySelector('.popup');
+const popUpEdit = document.querySelector('.popup_edit');
 const btnEdit = document.querySelector('.profile__btn-edit');
-const btnClose = popUp.querySelector('.popup__closed');
+const popUpAdd = document.querySelector('.popup_add');
+const btnAdd = document.querySelector('.profile__btn-add');
+const buttonsClose = document.querySelectorAll('.popup__closed');
 
 let profileName = document.querySelector('.profile__title');
 let profileAbout = document.querySelector('.profile__subtitle');
-let formPopup = popUp.querySelector('.popup__form');
+let formPopup = document.querySelector('.popup__form');
 let inputName = document.querySelector('.popup__input_name_name');
 let inputAbout = document.querySelector('.popup__input_name_about');
 
-
-btnEdit.addEventListener('click', openPopUp);
-btnClose.addEventListener('click', closePopUp);
-formPopup.addEventListener('submit', handleFormSubmit);
-
-function openPopUp() {
-  popUp.classList.add('popup_opened');
+btnEdit.addEventListener('click', () => {
   inputName.value = profileName.textContent;
   inputAbout.value = profileAbout.textContent;
+  openPopUp(popUpEdit)});
+btnAdd.addEventListener('click', () => openPopUp(popUpAdd));
+formPopup.addEventListener('submit', handleFormSubmit);
+
+buttonsClose.forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    const popup = btn.closest('.popup');
+    closePopUp(popup);
+  });
+});
+
+function openPopUp(modal) {
+  modal.classList.add('popup_opened');
 }
 
-function closePopUp() {
-  popUp.classList.remove('popup_opened');
+function closePopUp(modal) {
+  modal.classList.remove('popup_opened');
 }
 
 function handleFormSubmit(event) {
   event.preventDefault();
   profileName.textContent = inputName.value;
   profileAbout.textContent = inputAbout.value;
-  closePopUp();
+  closePopUp(popUpEdit);
 }
 
 const initialCards = [
@@ -69,21 +78,21 @@ clonCardTemplate.querySelector('.elements__title').textContent = item.name;
 cardsGrid.append(clonCardTemplate);
 });
 
-const btnsLike = document.querySelectorAll('.elements__btn');
-console.log(btnsLike);
+const buttonsLike = document.querySelectorAll('.elements__btn');
+console.log(buttonsLike);
 
-btnsLike.forEach(function(item) {
+buttonsLike.forEach(function(item) {
   item.addEventListener('click', () =>
     item.classList.toggle('elements__btn_like') //в  данном случае более занимательно, нежели просто add
   );
 });
 
-const btnsDelet = document.querySelectorAll('.elements__btn-delet');
-console.log(btnsDelet);
+const buttonsDelet = document.querySelectorAll('.elements__btn-delet');
+console.log(buttonsDelet);
 
-btnsDelet.forEach(function(item) {
+buttonsDelet.forEach(function(item) {
   item.addEventListener('click', function() {
-    elementsItem = item.closest('.elements__item');
+    const elementsItem = item.closest('.elements__item');
     elementsItem.remove();
   });
 });
