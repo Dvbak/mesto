@@ -6,16 +6,20 @@ const buttonsClose = document.querySelectorAll('.popup__closed');
 
 let profileName = document.querySelector('.profile__title');
 let profileAbout = document.querySelector('.profile__subtitle');
-let formPopup = document.querySelector('.popup__form');
-let inputName = document.querySelector('.popup__input_name_name');
-let inputAbout = document.querySelector('.popup__input_name_about');
+let formPopupEdit = popUpEdit.querySelector('.popup__form');
+let inputName = popUpEdit.querySelector('.popup__input_name_name');
+let inputAbout = popUpEdit.querySelector('.popup__input_name_about');
+let formPopupAdd = popUpAdd.querySelector('.popup__form');
+let inputPlace = popUpAdd.querySelector('.popup__input_name_place');
+let inputLink = popUpAdd.querySelector('.popup__input_name_link');
 
-btnEdit.addEventListener('click', () => {
+btnEdit.addEventListener('click', function() {
   inputName.value = profileName.textContent;
   inputAbout.value = profileAbout.textContent;
   openPopUp(popUpEdit)});
 btnAdd.addEventListener('click', () => openPopUp(popUpAdd));
-formPopup.addEventListener('submit', handleFormSubmit);
+formPopupEdit.addEventListener('submit', editFormSubmit);
+formPopupAdd.addEventListener('submit', creatCardFormSubmit);
 
 buttonsClose.forEach(function(btn) {
   btn.addEventListener('click', function() {
@@ -32,11 +36,19 @@ function closePopUp(modal) {
   modal.classList.remove('popup_opened');
 }
 
-function handleFormSubmit(event) {
+function editFormSubmit(event) {
   event.preventDefault();
   profileName.textContent = inputName.value;
   profileAbout.textContent = inputAbout.value;
   closePopUp(popUpEdit);
+}
+
+function creatCardFormSubmit(event) {
+  event.preventDefault();
+  creatCard(inputPlace.value, inputLink.value);
+  inputPlace.value = '';
+  inputLink.value = '';
+  closePopUp(popUpAdd);
 }
 
 const initialCards = [
@@ -69,30 +81,32 @@ const cardsGrid = document.querySelector('.elements__grid');
 const cardTemplate = cardsGrid.querySelector('#card').content;
 console.log(cardTemplate);
 
-initialCards.forEach(function(item) {
-let clonCardTemplate = cardTemplate.querySelector('.elements__item').cloneNode(true);
-console.log(clonCardTemplate);
-clonCardTemplate.querySelector('.elements__img').src = item.link;
-clonCardTemplate.querySelector('.elements__img').alt = item.name;
-clonCardTemplate.querySelector('.elements__title').textContent = item.name;
-cardsGrid.append(clonCardTemplate);
-});
+function creatCard(name, link) {
+  let clonTemplateCard = cardTemplate.querySelector('.elements__item').cloneNode(true);
+  clonTemplateCard.querySelector('.elements__img').src = link;
+  clonTemplateCard.querySelector('.elements__img').alt = name;
+  clonTemplateCard.querySelector('.elements__title').textContent = name;
+  let btnAddLike = clonTemplateCard.querySelector('.elements__btn');
+  btnAddLike.addEventListener('click', () => btnAddLike.classList.toggle('elements__btn_like'));
+  let btnCardDelet = clonTemplateCard.querySelector('.elements__btn-delet');
+  btnCardDelet.addEventListener('click', function() {
+    const elementsItem = btnCardDelet.closest('.elements__item');
+    elementsItem.remove();
+  });
+  cardsGrid.prepend(clonTemplateCard);
+}
 
-const buttonsLike = document.querySelectorAll('.elements__btn');
+for (let i = initialCards.length - 1; i >= 0; i--) {
+  creatCard(initialCards[i].name, initialCards[i].link);
+} // Запускаю обратный цикл, т.к. по заданию карточки надо вставлять в начало списка (prepend), а порядок следования в массиве не соответсвует описанию в задании. Можно сделать и через свойства массивов(см. ниже)
+
+// initialCards.slice().reverse().forEach(function(item) {
+// creatCard(item.name, item.link);
+// });
+
+const buttonsLike = document.getElementsByClassName('elements__btn');
 console.log(buttonsLike);
-
-buttonsLike.forEach(function(item) {
-  item.addEventListener('click', () =>
-    item.classList.toggle('elements__btn_like') //в  данном случае более занимательно, нежели просто add
-  );
-});
 
 const buttonsDelet = document.querySelectorAll('.elements__btn-delet');
 console.log(buttonsDelet);
 
-buttonsDelet.forEach(function(item) {
-  item.addEventListener('click', function() {
-    const elementsItem = item.closest('.elements__item');
-    elementsItem.remove();
-  });
-});
