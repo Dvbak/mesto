@@ -1,60 +1,3 @@
-const popUpEdit = document.querySelector('.popup_edit');
-const btnEdit = document.querySelector('.profile__btn-edit');
-const popUpAdd = document.querySelector('.popup_add');
-const btnAdd = document.querySelector('.profile__btn-add');
-const popUpImg = document.querySelector('.popup_img');
-const buttonsClose = document.querySelectorAll('.popup__closed');
-
-let profileName = document.querySelector('.profile__title');
-let profileAbout = document.querySelector('.profile__subtitle');
-let formPopupEdit = popUpEdit.querySelector('.popup__form');
-let inputName = popUpEdit.querySelector('.popup__input_name_name');
-let inputAbout = popUpEdit.querySelector('.popup__input_name_about');
-let formPopupAdd = popUpAdd.querySelector('.popup__form');
-let inputPlace = popUpAdd.querySelector('.popup__input_name_place');
-let inputLink = popUpAdd.querySelector('.popup__input_name_link');
-
-function openPopUp(modal) {
-  modal.classList.add('popup_opened');
-}
-function closePopUp(modal) {
-  modal.classList.remove('popup_opened');
-}
-btnEdit.addEventListener('click', function() {
-  inputName.value = profileName.textContent;
-  inputAbout.value = profileAbout.textContent;
-  openPopUp(popUpEdit);
-});
-btnAdd.addEventListener('click', function() {
-  openPopUp(popUpAdd);
-});
-
-formPopupEdit.addEventListener('submit', editFormSubmit);
-
-function editFormSubmit(event) {
-  event.preventDefault();
-  profileName.textContent = inputName.value;
-  profileAbout.textContent = inputAbout.value;
-  closePopUp(popUpEdit);
-}
-
-formPopupAdd.addEventListener('submit', creatCardFormSubmit);
-
-function creatCardFormSubmit(event) {
-  event.preventDefault();
-  creatCard(inputPlace.value, inputLink.value);
-  inputPlace.value = '';
-  inputLink.value = '';
-  closePopUp(popUpAdd);
-}
-
-buttonsClose.forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    const popup = btn.closest('.popup');
-    closePopUp(popup);
-  });
-});
-
 const initialCards = [
   {
     name: 'Архыз',
@@ -114,6 +57,65 @@ creatCard(item.name, item.link);
 // for (let i = initialCards.length - 1; i >= 0; i--) {
 //   creatCard(initialCards[i].name, initialCards[i].link);
 // }
+
+
+const popUpEdit = document.querySelector('.popup_edit');
+const btnEdit = document.querySelector('.profile__btn-edit');
+const popUpAdd = document.querySelector('.popup_add');
+const btnAdd = document.querySelector('.profile__btn-add');
+const popUpImg = document.querySelector('.popup_img');
+const buttonsClose = document.querySelectorAll('.popup__closed');
+
+let profileName = document.querySelector('.profile__title');
+let profileAbout = document.querySelector('.profile__subtitle');
+let formPopupEdit = popUpEdit.querySelector('.popup__form');
+let inputName = popUpEdit.querySelector('.popup__input_name_name');
+let inputAbout = popUpEdit.querySelector('.popup__input_name_about');
+let formPopupAdd = popUpAdd.querySelector('.popup__form');
+let inputPlace = popUpAdd.querySelector('.popup__input_name_place');
+let inputLink = popUpAdd.querySelector('.popup__input_name_link');
+
+function openPopUp(modal) {
+  modal.classList.add('popup_opened');
+}
+function closePopUp(modal) {
+  modal.classList.remove('popup_opened');
+}
+btnEdit.addEventListener('click', function() {
+  inputName.value = profileName.textContent;
+  inputAbout.value = profileAbout.textContent;
+  openPopUp(popUpEdit);
+});
+btnAdd.addEventListener('click', function() {
+  openPopUp(popUpAdd);
+});
+
+formPopupEdit.addEventListener('submit', editFormSubmit);
+
+function editFormSubmit(event) {
+  event.preventDefault();
+  profileName.textContent = inputName.value;
+  profileAbout.textContent = inputAbout.value;
+  closePopUp(popUpEdit);
+}
+
+formPopupAdd.addEventListener('submit', creatCardFormSubmit);
+
+function creatCardFormSubmit(event) {
+  event.preventDefault();
+  creatCard(inputPlace.value, inputLink.value);
+  inputPlace.value = '';
+  inputLink.value = '';
+  closePopUp(popUpAdd);
+}
+
+buttonsClose.forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    const popup = btn.closest('.popup');
+    closePopUp(popup);
+  });
+});
+
 
 
 
