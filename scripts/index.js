@@ -26,54 +26,64 @@ const initialCards = [
 ];
 const cardsGrid = document.querySelector('.elements__grid');
 const cardTemplate = cardsGrid.querySelector('#card').content;
+const popUpImg = document.querySelector('.popup_img');
+const imagePopUpImg = popUpImg.querySelector('.popup__image');
+const captionPopUpImg = popUpImg.querySelector('.popup__caption');
 
 function creatCard(name, link) {
-  let clonTemplateCard = cardTemplate.querySelector('.elements__item').cloneNode(true);
-  clonTemplateCard.querySelector('.elements__img').src = link;
-  clonTemplateCard.querySelector('.elements__img').alt = name;
-  clonTemplateCard.querySelector('.elements__title').textContent = name;
+  const clonTemplateCard = cardTemplate.querySelector('.elements__item').cloneNode(true);
+  const imgElementsItem = clonTemplateCard.querySelector('.elements__img');
+  const titleElementsItem = clonTemplateCard.querySelector('.elements__title');
+  imgElementsItem.src = link;
+  imgElementsItem.alt = name;
+  titleElementsItem.textContent = name;
 
-  let btnAddLike = clonTemplateCard.querySelector('.elements__btn');
+  const btnAddLike = clonTemplateCard.querySelector('.elements__btn');
   btnAddLike.addEventListener('click', function() {
     btnAddLike.classList.toggle('elements__btn_like');
   });
-  let btnCardDelet = clonTemplateCard.querySelector('.elements__btn-delet');
-  btnCardDelet.addEventListener('click', function() {
-    btnCardDelet.closest('.elements__item').remove();
+  const btnDeletCard = clonTemplateCard.querySelector('.elements__btn-delet');
+  btnDeletCard.addEventListener('click', function() {
+    btnDeletCard.closest('.elements__item').remove();
   });
-  let btnOpenImg = clonTemplateCard.querySelector('.elements__img');
+  const btnOpenImg = clonTemplateCard.querySelector('.elements__img');
   btnOpenImg.addEventListener('click', function() {
-    popUpImg.querySelector('.popup__image').src = link;
-    popUpImg.querySelector('.popup__caption').textContent = name;
+    imagePopUpImg.src = link;
+    imagePopUpImg.alt = name;
+    captionPopUpImg.textContent = name;
     openPopUp(popUpImg);
   });
-  cardsGrid.prepend(clonTemplateCard);
+  // cardsGrid.prepend(clonTemplateCard);
+  return clonTemplateCard;
 }
 
-initialCards.slice().reverse().forEach(function(item) {
-creatCard(item.name, item.link);
-}); // Запускаю обратный массив, т.к. по заданию карточки надо вставлять в начало списка (prepend), а порядок следования в массиве не соответсвует описанию в задании. Можно сделать и через обратный цикл(см. ниже).
+function addCard(box, clon) {
+  box.prepend(clon);
+} // Не совсем понятен смысл создания отдельной функции вместо однострочной инструкции, тем более когда в ней используются локальные переменные? К тому же это привело к небольшому, но увеличению кода. По моему мнению изначальная функция creatCard выполняет одно действие - это динамическое создание отдельного элемента (<li class="elements__item">) контента и отделять процесс добавления карточки в DOM не совсем правильно. Если следовать подобной логике, то функционал создания клона тоже можно рассмотреть как отдельное действие.
 
+initialCards.slice().reverse().forEach(function(item) {
+  // creatCard(item.name, item.link);
+  addCard(cardsGrid, creatCard(item.name, item.link));
+}); // Запускаю обратный массив, т.к. по заданию карточки надо вставлять в начало списка (prepend), а порядок следования в массиве не соответсвует описанию в задании. Можно сделать и через обратный цикл(см. ниже).
 // for (let i = initialCards.length - 1; i >= 0; i--) {
 //   creatCard(initialCards[i].name, initialCards[i].link);
 // }
 
 
-const popUpEdit = document.querySelector('.popup_edit');
+const popUpEditProfile = document.querySelector('.popup_edit');
 const btnEdit = document.querySelector('.profile__btn-edit');
-const popUpAdd = document.querySelector('.popup_add');
+const popUpAddCard = document.querySelector('.popup_add');
 const btnAdd = document.querySelector('.profile__btn-add');
-const popUpImg = document.querySelector('.popup_img');
 const buttonsClose = document.querySelectorAll('.popup__closed');
 
 let profileName = document.querySelector('.profile__title');
 let profileAbout = document.querySelector('.profile__subtitle');
-let formPopupEdit = popUpEdit.querySelector('.popup__form');
-let inputName = popUpEdit.querySelector('.popup__input_name_name');
-let inputAbout = popUpEdit.querySelector('.popup__input_name_about');
-let formPopupAdd = popUpAdd.querySelector('.popup__form');
-let inputPlace = popUpAdd.querySelector('.popup__input_name_place');
-let inputLink = popUpAdd.querySelector('.popup__input_name_link');
+let formPopupEditProfile = popUpEditProfile.querySelector('.popup__form');
+let inputName = popUpEditProfile.querySelector('.popup__input_name_name');
+let inputAbout = popUpEditProfile.querySelector('.popup__input_name_about');
+let formPopupAddCard = popUpAddCard.querySelector('.popup__form');
+let inputPlace = popUpAddCard.querySelector('.popup__input_name_place');
+let inputLink = popUpAddCard.querySelector('.popup__input_name_link');
 
 function openPopUp(modal) {
   modal.classList.add('popup_opened');
@@ -84,29 +94,30 @@ function closePopUp(modal) {
 btnEdit.addEventListener('click', function() {
   inputName.value = profileName.textContent;
   inputAbout.value = profileAbout.textContent;
-  openPopUp(popUpEdit);
+  openPopUp(popUpEditProfile);
 });
 btnAdd.addEventListener('click', function() {
-  openPopUp(popUpAdd);
+  inputPlace.value = '';
+  inputLink.value = '';
+  openPopUp(popUpAddCard);
 });
 
-formPopupEdit.addEventListener('submit', editFormSubmit);
+formPopupEditProfile.addEventListener('submit', editFormSubmit);
 
 function editFormSubmit(event) {
   event.preventDefault();
   profileName.textContent = inputName.value;
   profileAbout.textContent = inputAbout.value;
-  closePopUp(popUpEdit);
+  closePopUp(popUpEditProfile);
 }
 
-formPopupAdd.addEventListener('submit', creatCardFormSubmit);
+formPopupAddCard.addEventListener('submit', creatCardFormSubmit);
 
 function creatCardFormSubmit(event) {
   event.preventDefault();
-  creatCard(inputPlace.value, inputLink.value);
-  inputPlace.value = '';
-  inputLink.value = '';
-  closePopUp(popUpAdd);
+  // creatCard(inputPlace.value, inputLink.value);
+  addCard(cardsGrid, creatCard(inputPlace.value, inputLink.value));
+  closePopUp(popUpAddCard);
 }
 
 buttonsClose.forEach(function(btn) {
