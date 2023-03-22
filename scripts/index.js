@@ -1,4 +1,4 @@
-function creatCard(name, link) {
+function createCard(name, link) {
   const clonTemplateCard = cardTemplate.querySelector('.elements__item').cloneNode(true);
   const imgElementsItem = clonTemplateCard.querySelector('.elements__img');
   const titleElementsItem = clonTemplateCard.querySelector('.elements__title');
@@ -31,7 +31,7 @@ function addCard(box, clon) {
 
 initialCards.slice().reverse().forEach(function(item) {
   // creatCard(item.name, item.link);
-  addCard(cardsGrid, creatCard(item.name, item.link));
+  addCard(cardsGrid, createCard(item.name, item.link));
 }); // Запускаю обратный массив, т.к. по заданию карточки надо вставлять в начало списка (prepend), а порядок следования в массиве не соответсвует описанию в задании. Можно сделать и через обратный цикл(см. ниже).
 // for (let i = initialCards.length - 1; i >= 0; i--) {
 //   creatCard(initialCards[i].name, initialCards[i].link);
@@ -49,8 +49,9 @@ btnEditProfile.addEventListener('click', function() {
   openPopUp(popUpEditProfile);
 });
 btnAddCard.addEventListener('click', function() {
-  inputPlace.value = '';
-  inputLink.value = '';
+  formPopupAddCard.reset();
+  // inputPlace.value = '';
+  // inputLink.value = '';
   openPopUp(popUpAddCard);
 });
 
@@ -63,12 +64,12 @@ function editFormSubmit(event) {
   closePopUp(popUpEditProfile);
 }
 
-formPopupAddCard.addEventListener('submit', creatCardFormSubmit);
+formPopupAddCard.addEventListener('submit', addCardFormSubmit);
 
-function creatCardFormSubmit(event) {
+function addCardFormSubmit(event) {
   event.preventDefault();
   // creatCard(inputPlace.value, inputLink.value);
-  addCard(cardsGrid, creatCard(inputPlace.value, inputLink.value));
+  addCard(cardsGrid, createCard(inputPlace.value, inputLink.value));
   closePopUp(popUpAddCard);
 }
 
