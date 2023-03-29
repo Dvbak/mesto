@@ -21,28 +21,34 @@ function createCard(name, link) {
     captionPopUpImg.textContent = name;
     openPopUp(popUpImg);
   });
-  // cardsGrid.prepend(clonTemplateCard);
   return clonTemplateCard;
 }
 
 function addCard(box, clon) {
   box.prepend(clon);
-} // Не совсем понятен смысл создания отдельной функции вместо однострочной инструкции, тем более когда в ней используются локальные переменные? К тому же это привело к небольшому, но увеличению кода. По моему мнению изначальная функция creatCard выполняет одно действие - это динамическое создание отдельного элемента (<li class="elements__item">) контента и отделять процесс добавления карточки в DOM не совсем правильно. Если следовать подобной логике, то функционал создания клона тоже можно рассмотреть как отдельное действие.
+}
 
 initialCards.slice().reverse().forEach(function(item) {
-  // creatCard(item.name, item.link);
   addCard(cardsGrid, createCard(item.name, item.link));
-}); // Запускаю обратный массив, т.к. по заданию карточки надо вставлять в начало списка (prepend), а порядок следования в массиве не соответсвует описанию в задании. Можно сделать и через обратный цикл(см. ниже).
-// for (let i = initialCards.length - 1; i >= 0; i--) {
-//   creatCard(initialCards[i].name, initialCards[i].link);
-// }
+});
+
+function closePopUpEscHandler(evt) {
+  const openedPopup = document.querySelector('.popup_opened');
+  if (openedPopup && evt.key === 'Escape') {
+    closePopUp(openedPopup);
+  }
+}
 
 function openPopUp(modal) {
   modal.classList.add('popup_opened');
+  document.addEventListener('keydown', closePopUpEscHandler);
 }
+
 function closePopUp(modal) {
   modal.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopUpEscHandler);
 }
+
 btnEditProfile.addEventListener('click', function() {
   inputName.value = profileName.textContent;
   inputAbout.value = profileAbout.textContent;
@@ -50,8 +56,6 @@ btnEditProfile.addEventListener('click', function() {
 });
 btnAddCard.addEventListener('click', function() {
   formPopupAddCard.reset();
-  // inputPlace.value = '';
-  // inputLink.value = '';
   openPopUp(popUpAddCard);
 });
 
@@ -68,7 +72,6 @@ formPopupAddCard.addEventListener('submit', addCardFormSubmit);
 
 function addCardFormSubmit(event) {
   event.preventDefault();
-  // creatCard(inputPlace.value, inputLink.value);
   addCard(cardsGrid, createCard(inputPlace.value, inputLink.value));
   closePopUp(popUpAddCard);
 }
@@ -80,6 +83,23 @@ buttonsClose.forEach(function(btn) {
   });
 });
 
+document.body.addEventListener('click', function(evt) {
+  const openedPopup = document.querySelector('.popup_opened');
+  console.log(openedPopup);
+  if (openedPopup && evt.target === openedPopup) {
+    closePopUp(openedPopup);
+  }
+});
 
+// function openPopUp(modal) {
+//   modal.classList.add('popup_opened');
+//   closePopUpKeyEscape(modal);
+// }
 
-
+// function closePopUpKeyEscape(modal) {
+//   document.addEventListener('keydown', function(evt) {
+//     if (evt.key === 'Escape') {
+//       closePopUp(modal);
+//     }
+//   }, {once: true});
+// }
