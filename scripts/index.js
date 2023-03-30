@@ -55,6 +55,7 @@ btnEditProfile.addEventListener('click', function() {
   inputAbout.value = profileAbout.textContent;
   openPopUp(popUpEditProfile);
 });
+
 btnAddCard.addEventListener('click', function() {
   formPopupAddCard.reset();
   openPopUp(popUpAddCard);
