@@ -42,6 +42,7 @@ function closePopUpEscHandler(evt) {
 function openPopUp(modal) {
   modal.classList.add('popup_opened');
   document.addEventListener('keydown', closePopUpEscHandler);
+  // closeClick(modal);
 }
 
 function closePopUp(modal) {
@@ -83,23 +84,40 @@ buttonsClose.forEach(function(btn) {
   });
 });
 
+// Два варианта отработки закрытия при клике по оверлею:
+// Вариант 1 - есть минус в том что постоянно на документе висит обработчик события, зато он один. Возможный минус, если следовать досканально "сухому" правилу DRY, это повторение определения переменной openedPopup. По-моему лучше так в обработчике событий (это будет реже), чем просто определять в локальной области функции открытия модального окна (что чаще).
+
 document.body.addEventListener('click', function(evt) {
   const openedPopup = document.querySelector('.popup_opened');
-  console.log(openedPopup);
   if (openedPopup && evt.target === openedPopup) {
     closePopUp(openedPopup);
   }
 });
 
-// function openPopUp(modal) {
-//   modal.classList.add('popup_opened');
-//   closePopUpKeyEscape(modal);
+//Вариант 2 - минус в том, что если закрываем модалку не по клику, то происходит накопление обработчиков событий. Это длится до тех пор пока не кликнем "как надо". Из двух вариантов нравится больше первый, потому что покороче.
+
+// function closeClick(modal) {
+//   function closeClickHandler(evt) {
+//     if (evt.target === evt.currentTarget) {
+//       closePopUp(modal);
+//       modal.removeEventListener('click', closeClickHandler);
+//     }
+//   }
+//   modal.addEventListener('click', closeClickHandler);
 // }
 
-// function closePopUpKeyEscape(modal) {
-//   document.addEventListener('keydown', function(evt) {
-//     if (evt.key === 'Escape') {
-//       closePopUp(modal);
+
+
+// const popup = document.querySelectorAll('.popup');
+// console.log(popup);
+// function closeClick() {
+//   popup.forEach(function(win) {
+//     if (win.classList.contains('popup_opened')) {
+//       win.addEventListener('click', function(evt) {
+//         if (evt.target === evt.currentTarget) {
+//           closePopUp(win);
+//         }
+//       }, {once: true});
 //     }
-//   }, {once: true});
+//   });
 // }
