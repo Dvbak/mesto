@@ -20,7 +20,7 @@
   background-color: transparent;
   border: 1px solid rgba(0, 0, 0, .2);
   color: rgba(0, 0, 0, .2);
-  cursor: default;
+  cursor: not-allowed;
 }
 
 @media screen and (max-width: 635px) {
