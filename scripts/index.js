@@ -44,10 +44,12 @@ function closePopUpEscHandler(evt) {
 //Нижеследующая функция делает недоступной кнопку отправки submit в форме модальных окон:
 
 function cancelSubmitButton(modal) {
-  const submitButton = modal.querySelector('.popup__submit');
-  if (!submitButton.hasAttribute('disabled')) {
-    submitButton.setAttribute('disabled', true);
-  };
+  if (!modal.classList.contains('popup_img')) {
+    const submitButton = modal.querySelector('.popup__submit');
+    if (!submitButton.hasAttribute('disabled')) {
+      submitButton.setAttribute('disabled', true);
+    };
+  }
 }
 
 function openPopUp(modal) {
@@ -112,16 +114,17 @@ buttonsClose.forEach(function(btn) {
 });
 
 // Два варианта отработки закрытия при клике по оверлею:
-// Вариант 1 - есть минус в том что постоянно на документе висит обработчик события, зато он один. Возможный минус, если следовать досканально "сухому" правилу DRY, это повторение определения переменной openedPopup. По-моему лучше так в обработчике событий (это будет реже), чем просто определять в локальной области функции открытия модального окна (что чаще):
+// Вариант 1 - есть минус в том что постоянно на документе висит обработчик события и следит за самым частым событием - кликом, но зато он один. Возможный минус, если следовать досканально "сухому" правилу DRY, это повторение определения переменной openedPopup.
 
 document.body.addEventListener('click', function(evt) {
   const openedPopup = document.querySelector('.popup_opened');
+  // console.log(openedPopup);
   if (openedPopup && evt.target === openedPopup) {
     closePopUp(openedPopup);
   }
 });
 
-//Вариант 2 - плюс в том что обработчик события появляется и удаляется при открытии и закрытии окна. Минус в том, что если закрываем модалку не по клику, то происходит накопление обработчиков событий. Это длится до тех пор пока не кликнем "как надо". Из двух вариантов нравится больше первый, потому что покороче:
+//Вариант 2 - плюс в том что обработчик события появляется и удаляется при открытии и закрытии окна. Минус в том, что если закрываем модалку не по клику, то происходит накопление обработчиков событий. Это длится до тех пор пока не кликнем "как надо". Из двух вариантов выбрал первый, потому что покороче:
 
 // function closeClick(modal) {
 //   function closeClickHandler(evt) {
