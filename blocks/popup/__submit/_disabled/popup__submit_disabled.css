@@ -6,6 +6,6 @@
 }
 
 .popup__submit_disabled:hover {
-  background-color: transparent;;
+  background-color: transparent;
   cursor: not-allowed;
 }
