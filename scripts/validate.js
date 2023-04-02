@@ -2,10 +2,10 @@ const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__submit',
-  inactiveButtonAttribute: 'disabled',
+  inactiveButtonClass: 'popup__submit_disabled',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__input-error_visible'
-}; // Константу не стал переносить в файл constant.js. В случае изменения классов и прочих входных данных для валидации форм, на мой взгляд, это удобнее делать в данном файле.
+};
 
 function showInputError(form, input, validationConfig) {
   const textInputError = form.querySelector(`.${input.id}-error`);
@@ -15,7 +15,6 @@ function showInputError(form, input, validationConfig) {
 }
 
 function hideInputError(form, input, validationConfig) {
-  // console.log(validationConfig.inputErrorClass);
   const textInputError = form.querySelector(`.${input.id}-error`);
   input.classList.remove(validationConfig.inputErrorClass);
   textInputError.classList.remove(validationConfig.errorClass);
@@ -36,13 +35,23 @@ function hasInvalidInput(list) {
   });
 }
 
-//Не понимаю зачем создавать дополнительный класс для кнопки формы, когда есть в свойствах CSS замечательный псевдокласс :disabled. Определяем данный псевдокласс в уже существующем классе кнопки и добавляем, удаляем атрибут disabled в HTML-разметке:
+//Не понимаю зачем создавать дополнительный класс для кнопки формы, когда есть в свойствах CSS замечательный псевдокласс :disabled. Определяем данный псевдокласс в уже существующем классе кнопки и добавляем, удаляем атрибут disabled в HTML-разметке. Категорически не согласен с Вашим комментарием. Я не просто, как Вы пишите: "...только добавляете/убираете атрибут disabled". Я при этом меняю класс элемента кнопки на псевдокласс :disabled, предусмотренный CSS. И в коде обхожусь по сути только одной строчкой добавления/убирания атрибута. Теперь же, мало того что создаем новый класс со всеми последствиями, мы должны еще прописывать почти точно такую же строку по классу. Почему то никому не приходит в голову создавать отдельный класс для hover в стандартной ситуации. Вообщем, стало еще не понятней. Но задание есть задание, поэтому надо следовать ему.
 
-function toggleSubmitButton(button, list, validationConfig) {
+function enableSubmitButton(button) {
+  button.classList.remove(validationConfig.inactiveButtonClass);
+  button.removeAttribute('disabled');
+}
+
+function disableSubmitButton(button) {
+  button.classList.add(validationConfig.inactiveButtonClass);
+  button.setAttribute('disabled', true);
+}
+
+function toggleSubmitButton(button, list) {
   if (hasInvalidInput(list)) {
-    button.setAttribute(validationConfig.inactiveButtonAttribute, true);
+    disableSubmitButton(button, validationConfig);
   } else {
-    button.removeAttribute(validationConfig.inactiveButtonAttribute);
+    enableSubmitButton(button, validationConfig);
   }
 }
 
@@ -59,7 +68,8 @@ function setEventListeners(form, validationConfig) {
 
 function enableValidation(validationConfig) {
   const formsList = Array.from(document.querySelectorAll(validationConfig.formSelector));
-  // console.log(validationConfig.formSelector);
+  console.log(validationConfig);
+  console.log(formsList);
   formsList.forEach(function(form) {
     form.addEventListener('submit', function(evt) {
       evt.preventDefault();

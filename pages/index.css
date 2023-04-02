@@ -49,6 +49,7 @@
 @import url(../blocks/popup/__input-error/popup__input-error.css);
 @import url(../blocks/popup/__input-error/_visible/popup__input-error_visible.css);
 @import url(../blocks/popup/__submit/popup__submit.css);
+@import url(../blocks/popup/__submit/_disabled/popup__submit_disabled.css);
 @import url(../blocks/popup/__closed/popup__closed.css);
 @import url(../blocks/popup/__pic-closed/popup__pic-closed.css);
 @import url(../blocks/popup/__inner/popup__inner.css);

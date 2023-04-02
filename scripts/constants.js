@@ -30,6 +30,7 @@ const popUpImg = document.querySelector('.popup_img');
 const imagePopUpImg = popUpImg.querySelector('.popup__image');
 const captionPopUpImg = popUpImg.querySelector('.popup__caption');
 
+const popUps = document.querySelectorAll('.popup');
 const popUpEditProfile = document.querySelector('.popup_edit');
 const btnEditProfile = document.querySelector('.profile__btn-edit');
 const popUpAddCard = document.querySelector('.popup_add');

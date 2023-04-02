@@ -16,13 +16,6 @@
   cursor: pointer;
 }
 
-.popup__submit:disabled {
-  background-color: transparent;
-  border: 1px solid rgba(0, 0, 0, .2);
-  color: rgba(0, 0, 0, .2);
-  cursor: not-allowed;
-}
-
 @media screen and (max-width: 635px) {
   .popup__submit {
     height: 46px;
