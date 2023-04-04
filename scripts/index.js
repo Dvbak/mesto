@@ -37,21 +37,8 @@ initialCards.slice().reverse().forEach(function(item) {
 function closePopUpEscHandler(evt) {
   const openedPopup = document.querySelector('.popup_opened');
   if (openedPopup && evt.key === 'Escape') {
-    if (hasFormsInPopup(openedPopup)){
-      closePopUp(openedPopup);
-      deletTextError(openedPopup);
-    }
     closePopUp(openedPopup);
   }
-}
-
-//Нижеследующая функция делает недоступной кнопку отправки submit в форме модальных окон:
-
-function cancelSubmitButton(modal) {
-    const submitButton = modal.querySelector('.popup__submit');
-    if (!submitButton.classList.contains('popup__submit_disabled')) {
-      disableSubmitButton(submitButton);
-    };
 }
 
 function openPopUp(modal) {
@@ -59,35 +46,45 @@ function openPopUp(modal) {
   document.addEventListener('keydown', closePopUpEscHandler);
 }
 
+function closePopUp(modal) {
+  modal.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopUpEscHandler);
+}
+
+//Нижеследующая функция делает недоступной кнопку отправки submit в форме модальных окон:
+
+function cancelSubmitButton(modal) {
+  const submitButton = modal.querySelector('.popup__submit');
+  if (!submitButton.classList.contains('popup__submit_disabled')) {
+    disableSubmitButton(submitButton);
+  };
+}
+
 //Следующая функция очищает форму модального окна от текста ошибок в случае закрытия без сохранения данных:
 
 function deletTextError (modal) {
   const inputsInvalid = modal.querySelectorAll('.popup__input');
-  // if (inputsInvalid.length !== 0) {
-    inputsInvalid.forEach(function(input) {
-      hideInputError(modal, input, validationConfig);
-    });
-  // }
+  inputsInvalid.forEach(function(input) {
+    hideInputError(modal, input, validationConfig);
+  });
 }
 
-function closePopUp(modal) {
-  modal.classList.remove('popup_opened');
-  // deletTextError(modal);
-  document.removeEventListener('keydown', closePopUpEscHandler);
-}
-
-btnEditProfile.addEventListener('click', function() {
+btnEditProfile.addEventListener('click', btnEditProfileHandler);
+function btnEditProfileHandler() {
   inputName.value = profileName.textContent;
   inputAbout.value = profileAbout.textContent;
+  deletTextError(popUpEditProfile);
   cancelSubmitButton(popUpEditProfile);
   openPopUp(popUpEditProfile);
-});
+}
 
-btnAddCard.addEventListener('click', function() {
+btnAddCard.addEventListener('click', btnAddCardHandler);
+function btnAddCardHandler () {
   formPopupAddCard.reset();
+  deletTextError(popUpAddCard);
   cancelSubmitButton(popUpAddCard);
   openPopUp(popUpAddCard);
-});
+}
 
 formPopupEditProfile.addEventListener('submit', editFormSubmit);
 function editFormSubmit(event) {
@@ -104,39 +101,20 @@ function addCardFormSubmit(event) {
   closePopUp(popUpAddCard);
 }
 
-//Создаю функцию наличия формы в модалке. С её помощью проверяю закрывающиеся окна на наличие форм. При обнаружении таковой к функции закрытия окна добавляю функцию зачистки формы. Хотя, я бы оставил бы функцию очистки в общей функции закрытия, добавив всего пару строк кода проверки наличия формы. Таким образом зачистка не происходила бы при отсутсвии инпутов. С точки зрения оптимизации кода этот вариант лучше - всего три строки кода дополнительно (мною закомментированы). В другом случае это три строчки функции проверки и по три строчки в каждую функцию закрытия:
-
-function hasFormsInPopup(modal) {
-  const hasInputs = modal.querySelectorAll('.popup__input');
-  return (hasInputs.length !== 0);
-}
-
 buttonsClose.forEach(function(btn) {
   btn.addEventListener('click', function() {
     const popup = btn.closest('.popup');
-    if (hasFormsInPopup(popup)){
-      closePopUp(popup);
-      deletTextError(popup);
-    }
     closePopUp(popup);
   });
 });
 
-//Вариант 3 - предложенный Вами, если я конечно правильно понял Ваш комментарий. Не понял чем он лучше моего первого. Теперь вместо одного висят три обработчика. Да не на document, на оверлее, но три и постоянно. Хотелось бы понять чем этот вариант лучше моего второго?:
-
-console.log(popUps);
 popUps.forEach(function(popup) {
   popup.addEventListener('click', function(evt) {
     if (evt.target === evt.currentTarget) {
-      if (hasFormsInPopup(popup)){
-        closePopUp(popup);
-        deletTextError(popup);
-      }
       closePopUp(popup);
     }
   });
 });
-
 
 //Вариант 2 - плюс в том что обработчик события появляется и удаляется при открытии и закрытии окна. Минус в том, что если закрываем модалку не по клику, то происходит накопление обработчиков событий. Это длится до тех пор пока не кликнем "как надо".:
 
