@@ -51,6 +51,15 @@ function closePopUp(modal) {
   document.removeEventListener('keydown', closePopUpEscHandler);
 }
 
+//Данная функция переключает вид подсказки в инпутах в зависимости от его заполнения:
+
+function cancelInputHint(modal) {
+  const inputsHint = modal.querySelectorAll('.popup__input');
+  inputsHint.forEach(function(input) {
+    toggleInputHint(modal, input);
+  });
+}
+
 //Нижеследующая функция делает недоступной кнопку отправки submit в форме модальных окон:
 
 function cancelSubmitButton(modal) {
@@ -65,7 +74,7 @@ function cancelSubmitButton(modal) {
 function deletTextError (modal) {
   const inputsInvalid = modal.querySelectorAll('.popup__input');
   inputsInvalid.forEach(function(input) {
-    hideInputError(modal, input, validationConfig);
+    hideInputError(modal, input);
   });
 }
 
@@ -73,6 +82,7 @@ btnEditProfile.addEventListener('click', btnEditProfileHandler);
 function btnEditProfileHandler() {
   inputName.value = profileName.textContent;
   inputAbout.value = profileAbout.textContent;
+  cancelInputHint(popUpEditProfile);
   deletTextError(popUpEditProfile);
   cancelSubmitButton(popUpEditProfile);
   openPopUp(popUpEditProfile);
@@ -81,6 +91,7 @@ function btnEditProfileHandler() {
 btnAddCard.addEventListener('click', btnAddCardHandler);
 function btnAddCardHandler () {
   formPopupAddCard.reset();
+  cancelInputHint(popUpAddCard);
   deletTextError(popUpAddCard);
   cancelSubmitButton(popUpAddCard);
   openPopUp(popUpAddCard);
@@ -116,6 +127,12 @@ popUps.forEach(function(popup) {
   });
 });
 
+// const inputsHint = document.querySelectorAll('.popup__input-hint');
+// console.log(inputsHint);
+// inputsHint.forEach(function(hint) {
+//   hint.classList.add('popup__input-hint_attached');
+// })
+
 //Вариант 2 - плюс в том что обработчик события появляется и удаляется при открытии и закрытии окна. Минус в том, что если закрываем модалку не по клику, то происходит накопление обработчиков событий. Это длится до тех пор пока не кликнем "как надо".:
 
 // function closeClick(modal) {
@@ -127,5 +144,4 @@ popUps.forEach(function(popup) {
 //   }
 //   modal.addEventListener('click', closeClickHandler);
 // }
-
 
