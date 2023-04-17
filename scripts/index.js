@@ -127,12 +127,6 @@ popUps.forEach(function(popup) {
   });
 });
 
-// const inputsHint = document.querySelectorAll('.popup__input-hint');
-// console.log(inputsHint);
-// inputsHint.forEach(function(hint) {
-//   hint.classList.add('popup__input-hint_attached');
-// })
-
 //Вариант 2 - плюс в том что обработчик события появляется и удаляется при открытии и закрытии окна. Минус в том, что если закрываем модалку не по клику, то происходит накопление обработчиков событий. Это длится до тех пор пока не кликнем "как надо".:
 
 // function closeClick(modal) {
