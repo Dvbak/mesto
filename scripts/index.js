@@ -1,35 +1,44 @@
-function createCard(name, link) {
-  const clonTemplateCard = cardTemplate.querySelector('.elements__item').cloneNode(true);
-  const imgElementsItem = clonTemplateCard.querySelector('.elements__img');
-  const titleElementsItem = clonTemplateCard.querySelector('.elements__title');
-  imgElementsItem.src = link;
-  imgElementsItem.alt = name;
-  titleElementsItem.textContent = name;
+// function createCard(name, link) {
+//   const clonTemplateCard = cardTemplate.querySelector('.elements__item').cloneNode(true);
+//   const imgElementsItem = clonTemplateCard.querySelector('.elements__img');
+//   const titleElementsItem = clonTemplateCard.querySelector('.elements__title');
+//   imgElementsItem.src = link;
+//   imgElementsItem.alt = name;
+//   titleElementsItem.textContent = name;
 
-  const btnAddLike = clonTemplateCard.querySelector('.elements__btn');
-  btnAddLike.addEventListener('click', function() {
-    btnAddLike.classList.toggle('elements__btn_like');
-  });
-  const btnDeletCard = clonTemplateCard.querySelector('.elements__btn-delet');
-  btnDeletCard.addEventListener('click', function() {
-    btnDeletCard.closest('.elements__item').remove();
-  });
-  const btnOpenImg = clonTemplateCard.querySelector('.elements__img');
-  btnOpenImg.addEventListener('click', function() {
-    imagePopUpImg.src = link;
-    imagePopUpImg.alt = name;
-    captionPopUpImg.textContent = name;
-    openPopUp(popUpImg);
-  });
-  return clonTemplateCard;
+//   const btnAddLike = clonTemplateCard.querySelector('.elements__btn');
+//   btnAddLike.addEventListener('click', function() {
+//     btnAddLike.classList.toggle('elements__btn_like');
+//   });
+//   const btnDeletCard = clonTemplateCard.querySelector('.elements__btn-delet');
+//   btnDeletCard.addEventListener('click', function() {
+//     btnDeletCard.closest('.elements__item').remove();
+//   });
+//   const btnOpenImg = clonTemplateCard.querySelector('.elements__img');
+//   btnOpenImg.addEventListener('click', function() {
+//     imagePopUpImg.src = link;
+//     imagePopUpImg.alt = name;
+//     captionPopUpImg.textContent = name;
+//     openPopUp(popUpImg);
+//   });
+//   return clonTemplateCard;
+// }
+
+// function addCard(box, clon) {
+//   box.prepend(clon);
+// }
+
+// initialCards.slice().reverse().forEach(function(item) {
+//   addCard(cardsGrid, createCard(item.name, item.link));
+// });
+
+function addCard(box, itemCardsData) {
+  const card = new Card(itemCardsData, '#card');
+  const cardSimple = card.generateCard();
+  box.prepend(cardSimple);
 }
-
-function addCard(box, clon) {
-  box.prepend(clon);
-}
-
 initialCards.slice().reverse().forEach(function(item) {
-  addCard(cardsGrid, createCard(item.name, item.link));
+  addCard(cardsGrid, item);
 });
 
 //Создаю функцию обработчик события нажатия на клавишу Esc. Согласно заданию буду подключать при открытии модального окна, и удалять при закрытии:
@@ -108,7 +117,9 @@ function editFormSubmit(event) {
 formPopupAddCard.addEventListener('submit', addCardFormSubmit);
 function addCardFormSubmit(event) {
   event.preventDefault();
-  addCard(cardsGrid, createCard(inputPlace.value, inputLink.value));
+  const addedCard = {name: inputPlace.value, link: inputLink.value};
+  addCard(cardsGrid, addedCard);
+  // addCard(cardsGrid, createCard(inputPlace.value, inputLink.value));
   closePopUp(popUpAddCard);
 }
 

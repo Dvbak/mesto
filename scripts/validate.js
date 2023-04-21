@@ -10,7 +10,6 @@ const validationConfig = {
 
 function toggleInputHint(form, input) {
   const inputHint = form.querySelector(`.${input.id}-hint`);
-  console.log(inputHint);
   if (input.value !== '') {
     inputHint.classList.add(validationConfig.inputHintClass);
   } else inputHint.classList.remove(validationConfig.inputHintClass);
@@ -64,6 +63,7 @@ function toggleSubmitButton(button, list) {
 
 function setEventListeners(form) {
   const inputsList = Array.from(form.querySelectorAll(validationConfig.inputSelector));
+  console.log(inputsList);
   const buttonSubmit = form.querySelector(validationConfig.submitButtonSelector);
   inputsList.forEach(function(input) {
     input.addEventListener('input', function() {

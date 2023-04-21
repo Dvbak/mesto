@@ -25,7 +25,7 @@ const initialCards = [
   }
 ];
 const cardsGrid = document.querySelector('.elements__grid');
-const cardTemplate = cardsGrid.querySelector('#card').content;
+// const cardTemplate = cardsGrid.querySelector('#card').content;
 const popUpImg = document.querySelector('.popup_img');
 const imagePopUpImg = popUpImg.querySelector('.popup__image');
 const captionPopUpImg = popUpImg.querySelector('.popup__caption');
@@ -43,5 +43,5 @@ const formPopupEditProfile = popUpEditProfile.querySelector('.popup__form');
 const inputName = popUpEditProfile.querySelector('.popup__input_name_name');
 const inputAbout = popUpEditProfile.querySelector('.popup__input_name_about');
 const formPopupAddCard = popUpAddCard.querySelector('.popup__form');
-const inputPlace = popUpAddCard.querySelector('.popup__input_name_place');
-const inputLink = popUpAddCard.querySelector('.popup__input_name_link');
+const inputPlace = popUpAddCard.querySelector('.popup__input_name_place')
+const inputLink = popUpAddCard.querySelector('.popup__input_name_link')
