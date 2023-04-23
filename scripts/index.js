@@ -1,36 +1,5 @@
-// function createCard(name, link) {
-//   const clonTemplateCard = cardTemplate.querySelector('.elements__item').cloneNode(true);
-//   const imgElementsItem = clonTemplateCard.querySelector('.elements__img');
-//   const titleElementsItem = clonTemplateCard.querySelector('.elements__title');
-//   imgElementsItem.src = link;
-//   imgElementsItem.alt = name;
-//   titleElementsItem.textContent = name;
-
-//   const btnAddLike = clonTemplateCard.querySelector('.elements__btn');
-//   btnAddLike.addEventListener('click', function() {
-//     btnAddLike.classList.toggle('elements__btn_like');
-//   });
-//   const btnDeletCard = clonTemplateCard.querySelector('.elements__btn-delet');
-//   btnDeletCard.addEventListener('click', function() {
-//     btnDeletCard.closest('.elements__item').remove();
-//   });
-//   const btnOpenImg = clonTemplateCard.querySelector('.elements__img');
-//   btnOpenImg.addEventListener('click', function() {
-//     imagePopUpImg.src = link;
-//     imagePopUpImg.alt = name;
-//     captionPopUpImg.textContent = name;
-//     openPopUp(popUpImg);
-//   });
-//   return clonTemplateCard;
-// }
-
-// function addCard(box, clon) {
-//   box.prepend(clon);
-// }
-
-// initialCards.slice().reverse().forEach(function(item) {
-//   addCard(cardsGrid, createCard(item.name, item.link));
-// });
+import Card from './Card.js';
+import FormValidator from './FormValidator.js';
 
 function addCard(box, itemCardsData) {
   const card = new Card(itemCardsData, '#card');
@@ -40,8 +9,6 @@ function addCard(box, itemCardsData) {
 initialCards.slice().reverse().forEach(function(item) {
   addCard(cardsGrid, item);
 });
-
-//Создаю функцию обработчик события нажатия на клавишу Esc. Согласно заданию буду подключать при открытии модального окна, и удалять при закрытии:
 
 function closePopUpEscHandler(evt) {
   const openedPopup = document.querySelector('.popup_opened');
@@ -60,49 +27,22 @@ function closePopUp(modal) {
   document.removeEventListener('keydown', closePopUpEscHandler);
 }
 
-//Данная функция переключает вид подсказки в инпутах в зависимости от его заполнения:
-
-function cancelInputHint(modal) {
-  const inputsHint = modal.querySelectorAll('.popup__input');
-  inputsHint.forEach(function(input) {
-    toggleInputHint(modal, input);
-  });
-}
-
-//Нижеследующая функция делает недоступной кнопку отправки submit в форме модальных окон:
-
-function cancelSubmitButton(modal) {
-  const submitButton = modal.querySelector('.popup__submit');
-  if (!submitButton.classList.contains('popup__submit_disabled')) {
-    disableSubmitButton(submitButton);
-  };
-}
-
-//Следующая функция очищает форму модального окна от текста ошибок в случае закрытия без сохранения данных:
-
-function deletTextError (modal) {
-  const inputsInvalid = modal.querySelectorAll('.popup__input');
-  inputsInvalid.forEach(function(input) {
-    hideInputError(modal, input);
-  });
-}
-
 btnEditProfile.addEventListener('click', btnEditProfileHandler);
 function btnEditProfileHandler() {
   inputName.value = profileName.textContent;
   inputAbout.value = profileAbout.textContent;
-  cancelInputHint(popUpEditProfile);
-  deletTextError(popUpEditProfile);
-  cancelSubmitButton(popUpEditProfile);
+  const editProfileFormValidator = new FormValidator(validationConfig, popUpEditProfile);
+  editProfileFormValidator.enableValidation();
+  editProfileFormValidator.cleaningForm();
   openPopUp(popUpEditProfile);
 }
 
 btnAddCard.addEventListener('click', btnAddCardHandler);
 function btnAddCardHandler () {
   formPopupAddCard.reset();
-  cancelInputHint(popUpAddCard);
-  deletTextError(popUpAddCard);
-  cancelSubmitButton(popUpAddCard);
+  const addCardFormValidator = new FormValidator(validationConfig, popUpAddCard);
+  addCardFormValidator.enableValidation();
+  addCardFormValidator.cleaningForm();
   openPopUp(popUpAddCard);
 }
 
@@ -119,7 +59,6 @@ function addCardFormSubmit(event) {
   event.preventDefault();
   const addedCard = {name: inputPlace.value, link: inputLink.value};
   addCard(cardsGrid, addedCard);
-  // addCard(cardsGrid, createCard(inputPlace.value, inputLink.value));
   closePopUp(popUpAddCard);
 }
 
@@ -137,16 +76,3 @@ popUps.forEach(function(popup) {
     }
   });
 });
-
-//Вариант 2 - плюс в том что обработчик события появляется и удаляется при открытии и закрытии окна. Минус в том, что если закрываем модалку не по клику, то происходит накопление обработчиков событий. Это длится до тех пор пока не кликнем "как надо".:
-
-// function closeClick(modal) {
-//   function closeClickHandler(evt) {
-//     if (evt.target === evt.currentTarget) {
-//       closePopUp(modal);
-//       modal.removeEventListener('click', closeClickHandler);
-//     }
-//   }
-//   modal.addEventListener('click', closeClickHandler);
-// }
-

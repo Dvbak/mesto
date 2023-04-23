@@ -24,8 +24,18 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
+
+const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__submit',
+  inactiveButtonClass: 'popup__submit_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_visible',
+  inputHintClass: 'popup__input-hint_attached'
+};
+
 const cardsGrid = document.querySelector('.elements__grid');
-// const cardTemplate = cardsGrid.querySelector('#card').content;
 const popUpImg = document.querySelector('.popup_img');
 const imagePopUpImg = popUpImg.querySelector('.popup__image');
 const captionPopUpImg = popUpImg.querySelector('.popup__caption');
