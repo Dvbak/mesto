@@ -1,5 +1,16 @@
+import {
+  closePopUpEscHandler,
+  openPopUp,
+  closePopUp
+} from './utils.js';
+
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
+
+const editProfileFormValidator = new FormValidator(validationConfig, popUpEditProfile);
+editProfileFormValidator.enableValidation();
+const addCardFormValidator = new FormValidator(validationConfig, popUpAddCard);
+addCardFormValidator.enableValidation();
 
 function addCard(box, itemCardsData) {
   const card = new Card(itemCardsData, '#card');
@@ -10,29 +21,10 @@ initialCards.slice().reverse().forEach(function(item) {
   addCard(cardsGrid, item);
 });
 
-function closePopUpEscHandler(evt) {
-  const openedPopup = document.querySelector('.popup_opened');
-  if (openedPopup && evt.key === 'Escape') {
-    closePopUp(openedPopup);
-  }
-}
-
-function openPopUp(modal) {
-  modal.classList.add('popup_opened');
-  document.addEventListener('keydown', closePopUpEscHandler);
-}
-
-function closePopUp(modal) {
-  modal.classList.remove('popup_opened');
-  document.removeEventListener('keydown', closePopUpEscHandler);
-}
-
 btnEditProfile.addEventListener('click', btnEditProfileHandler);
 function btnEditProfileHandler() {
   inputName.value = profileName.textContent;
   inputAbout.value = profileAbout.textContent;
-  const editProfileFormValidator = new FormValidator(validationConfig, popUpEditProfile);
-  editProfileFormValidator.enableValidation();
   editProfileFormValidator.cleaningForm();
   openPopUp(popUpEditProfile);
 }
@@ -40,8 +32,6 @@ function btnEditProfileHandler() {
 btnAddCard.addEventListener('click', btnAddCardHandler);
 function btnAddCardHandler () {
   formPopupAddCard.reset();
-  const addCardFormValidator = new FormValidator(validationConfig, popUpAddCard);
-  addCardFormValidator.enableValidation();
   addCardFormValidator.cleaningForm();
   openPopUp(popUpAddCard);
 }

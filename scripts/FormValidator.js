@@ -13,13 +13,14 @@ class FormValidator {
     this._submitButton = options.submitButtonSelector;
     this._inactiveButton = options.inactiveButtonClass;
     this._inputHint = options.inputHintClass;
+    this._inputsList = modal.querySelectorAll(options.inputSelector);
   }
 
   _showInputError(input) {
     input.classList.add(this._inputError);
     const textInputError = this._formSelector.querySelector(`.${input.id}-error`);
     textInputError.textContent = input.validationMessage;
-    console.log(input.validationMessage);
+    console.log(textInputError);
     textInputError.classList.add(this._error);
   }
 
@@ -48,14 +49,14 @@ class FormValidator {
     this._formSelector.querySelector(this._submitButton).setAttribute('disabled', true);
   }
 
-  _hasInvalidInput(inputsList) {
-    return inputsList.some(function(input) {
+  _hasInvalidInput() {
+    return Array.from(this._inputsList).some(function(input) {
       return !input.validity.valid;
     });
   }
 
-  _toggleSubmitButton(inputsList) {
-    if (this._hasInvalidInput(inputsList)) {
+  _toggleSubmitButton() {
+    if (this._hasInvalidInput()) {
       this._disableSubmitButton();
     } else {
       this._enableSubmitButton();
@@ -63,7 +64,6 @@ class FormValidator {
   }
 
   _toggleInputHint(input) {
-    console.log(input.value);
     if (input.value !== '') {
       this._formSelector.querySelector(`.${input.id}-hint`).classList.add(this._inputHint);
     } else this._formSelector.querySelector(`.${input.id}-hint`).classList.remove(this._inputHint);
@@ -75,10 +75,10 @@ class FormValidator {
   }
 
   _setEventListeners() {
-    Array.from(this._formSelector.querySelectorAll(this._input)).forEach((item) => {
+    this._inputsList.forEach((item) => {
       item.addEventListener('input', () => {
         this._handlerInput(item);
-        this._toggleSubmitButton(Array.from(this._formSelector.querySelectorAll(this._input)));
+        this._toggleSubmitButton();
       });
     });
   }
@@ -92,7 +92,7 @@ class FormValidator {
   }
 
   cleaningForm() {
-    this._formSelector.querySelectorAll(this._input).forEach((input) => {
+    this._inputsList.forEach((input) => {
       this._hideInputError(input);
       this._toggleInputHint(input);
     });
