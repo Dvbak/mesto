@@ -6,20 +6,33 @@ import {
 
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
+import Section from './Section.js';
 
 const editProfileFormValidator = new FormValidator(validationConfig, popUpEditProfile);
 editProfileFormValidator.enableValidation();
 const addCardFormValidator = new FormValidator(validationConfig, popUpAddCard);
 addCardFormValidator.enableValidation();
 
-function addCard(box, itemCardsData) {
-  const card = new Card(itemCardsData, '#card');
-  const cardSimple = card.generateCard();
-  box.prepend(cardSimple);
-}
-initialCards.slice().reverse().forEach(function(item) {
-  addCard(cardsGrid, item);
-});
+// function addCard(box, itemCardsData) {
+//   const card = new Card(itemCardsData, '#card');
+//   const cardSimple = card.generateCard();
+//   box.prepend(cardSimple);
+// }
+// initialCards.slice().reverse().forEach(function(item) {
+//   addCard(cardsGrid, item);
+// });
+
+const cardsList = new Section({
+  itemCardsData: initialCards,
+  renderer: (item) => {
+      const card = new Card(item, '#card');
+      const cardSimple = card.generateCard();
+      cardsList.addItem(cardSimple);
+    }
+  }, '.elements__grid'
+)
+
+cardsList.renderAll();
 
 btnEditProfile.addEventListener('click', btnEditProfileHandler);
 function btnEditProfileHandler() {

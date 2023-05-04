@@ -35,7 +35,7 @@ const validationConfig = {
   inputHintClass: 'popup__input-hint_attached'
 };
 
-const cardsGrid = document.querySelector('.elements__grid');
+// const cardsGrid = document.querySelector('.elements__grid');
 const popUpImg = document.querySelector('.popup_img');
 const imagePopUpImg = popUpImg.querySelector('.popup__image');
 const captionPopUpImg = popUpImg.querySelector('.popup__caption');
