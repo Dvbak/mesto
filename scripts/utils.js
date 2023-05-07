@@ -13,6 +13,7 @@ function openPopUp(modal) {
 function closePopUp(modal) {
   modal.classList.remove('popup_opened');
   document.removeEventListener('keydown', closePopUpEscHandler);
+  console.log('я работаю');
 }
 
 export {

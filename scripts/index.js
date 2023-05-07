@@ -7,16 +7,23 @@ import {
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 import Section from './Section.js';
+import Popup from './Popup.js';
+import PopupWithImage from './PopupWithImage.js';
+
 
 const editProfileFormValidator = new FormValidator(validationConfig, popUpEditProfile);
 editProfileFormValidator.enableValidation();
 const addCardFormValidator = new FormValidator(validationConfig, popUpAddCard);
 addCardFormValidator.enableValidation();
+const popupImg = new PopupWithImage(popUpImg); // Экземпляр попапа картинки
+// popupImg.openImg('https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg', 'Drgs')
+console.log(popupImg);
 
 // function addCard(box, itemCardsData) {
 //   const card = new Card(itemCardsData, '#card');
 //   const cardSimple = card.generateCard();
 //   box.prepend(cardSimple);
+//   console.log('i work!');
 // }
 // initialCards.slice().reverse().forEach(function(item) {
 //   addCard(cardsGrid, item);
@@ -25,7 +32,7 @@ addCardFormValidator.enableValidation();
 const cardsList = new Section({
   itemCardsData: initialCards,
   renderer: (item) => {
-      const card = new Card(item, '#card');
+      const card = new Card(item, popupImg.openImg, '#card');
       const cardSimple = card.generateCard();
       cardsList.addItem(cardSimple);
     }
@@ -60,8 +67,18 @@ function editFormSubmit(event) {
 formPopupAddCard.addEventListener('submit', addCardFormSubmit);
 function addCardFormSubmit(event) {
   event.preventDefault();
-  const addedCard = {name: inputPlace.value, link: inputLink.value};
-  addCard(cardsGrid, addedCard);
+  const addedCard = [{name: inputPlace.value, link: inputLink.value}];
+  // addCard(cardsGrid, addedCard);
+  const cardsList = new Section({
+    itemCardsData: addedCard,
+    renderer: (item) => {
+        const card = new Card(item, '#card');
+        const cardSimple = card.generateCard();
+        cardsList.addItem(cardSimple);
+      }
+    }, '.elements__grid'
+  )
+  cardsList.renderAll();
   closePopUp(popUpAddCard);
 }
 

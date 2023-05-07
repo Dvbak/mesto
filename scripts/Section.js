@@ -1,6 +1,7 @@
 class Section {
   constructor({ itemCardsData, renderer }, selector) {
     this._initialCardsArr = itemCardsData.slice().reverse();
+    // this._initialCardsArr = itemCardsData;
     this._renderer = renderer;
     this._container = document.querySelector(selector);
   }
