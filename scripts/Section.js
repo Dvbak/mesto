@@ -1,7 +1,6 @@
-class Section {
+export default class Section {
   constructor({ itemCardsData, renderer }, selector) {
     this._initialCardsArr = itemCardsData.slice().reverse();
-    // this._initialCardsArr = itemCardsData;
     this._renderer = renderer;
     this._container = document.querySelector(selector);
   }
@@ -15,8 +14,5 @@ class Section {
 
   addItem(item) {
     this._container.prepend(item);
-    console.log('I work!!!');
   }
 }
-
-export default Section;

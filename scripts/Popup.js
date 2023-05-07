@@ -8,18 +8,17 @@ export default class Popup {
 
   openPopup() {
     console.log('i work?????');
-    console.log(this);
     this._selector.classList.add('popup_opened');
-    document.addEventListener('keydown', this._handleEscClose.bind(this));
+    document.addEventListener('keydown', this._handleEscClose);
   }
 
   closePopup() {
     this._selector.classList.remove('popup_opened');
-    document.removeEventListener('keydown', this._handleEscClose.bind(this));
+    document.removeEventListener('keydown', this._handleEscClose);
     console.log('я вроде работаю');
   }
 
-  _handleEscClose(evt) {
+  _handleEscClose = (evt) => {
     console.log(this);
     if (evt.key === 'Escape') {
     this.closePopup();
@@ -36,5 +35,4 @@ export default class Popup {
       this.closePopUp();
     });
   }
-
 }
