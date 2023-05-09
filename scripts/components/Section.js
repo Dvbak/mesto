@@ -1,3 +1,5 @@
+/*  */
+
 export default class Section {
   constructor({ itemCardsData, renderer }, selector) {
     this._initialCardsArr = itemCardsData.slice().reverse();

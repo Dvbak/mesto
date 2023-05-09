@@ -10,16 +10,15 @@ export default class Popup {
     console.log('i work?????');
     this._selector.classList.add('popup_opened');
     document.addEventListener('keydown', this._handleEscClose);
+    this.setEventListeners();
   }
 
   closePopup() {
     this._selector.classList.remove('popup_opened');
     document.removeEventListener('keydown', this._handleEscClose);
-    console.log('я вроде работаю');
   }
 
   _handleEscClose = (evt) => {
-    console.log(this);
     if (evt.key === 'Escape') {
     this.closePopup();
     }
@@ -32,7 +31,7 @@ export default class Popup {
       }
     });
     this._btnClose.addEventListener('click', () => {
-      this.closePopUp();
+      this.closePopup();
     });
   }
 }

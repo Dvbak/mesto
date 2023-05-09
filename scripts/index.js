@@ -1,98 +1,74 @@
-import {
-  closePopUpEscHandler,
-  openPopUp,
-  closePopUp
-} from './utils.js';
+import FormValidator from './components/FormValidator.js';
+import Card from './components/Card.js';
+import Section from './components/Section.js';
+import PopupWithImage from './components/PopupWithImage.js';
+import PopupWithForm from './components/PopupWithForm.js';
+import UserInfo from './components/UserInfo.js';
 
-import Card from './Card.js';
-import FormValidator from './FormValidator.js';
-import Section from './Section.js';
-import Popup from './Popup.js';
-import PopupWithImage from './PopupWithImage.js';
-
-
+//Экземпляры валидаторов форм для каждого модального окна:
 const editProfileFormValidator = new FormValidator(validationConfig, popUpEditProfile);
 editProfileFormValidator.enableValidation();
 const addCardFormValidator = new FormValidator(validationConfig, popUpAddCard);
 addCardFormValidator.enableValidation();
-const popupImg = new PopupWithImage(popUpImg); // Экземпляр попапа картинки
-// popupImg.openImg('https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg', 'Drgs')
-console.log(popupImg);
 
-// function addCard(box, itemCardsData) {
-//   const card = new Card(itemCardsData, '#card');
-//   const cardSimple = card.generateCard();
-//   box.prepend(cardSimple);
-//   console.log('i work!');
-// }
-// initialCards.slice().reverse().forEach(function(item) {
-//   addCard(cardsGrid, item);
-// });
+//Экземпляры соответствующих всплывающих окон:
+const popupImg = new PopupWithImage(popUpImg);
+const popupEditProfile = new PopupWithForm(popUpEditProfile, editFormSubmit);
 
+const popupAddCard = new PopupWithForm(popUpAddCard, addCardFormSubmit);
+
+//Экземпляр класса UserInfo:
+const userInfo = new UserInfo(dataInputs);
+console.log(userInfo.getUserInfo());
+
+//Создание карточек и загрузочного контента:
 const cardsList = new Section({
   itemCardsData: initialCards,
   renderer: (item) => {
-      const card = new Card(item, popupImg.openImg, '#card');
+      const card = new Card(item, popupImg.openPopup, '#card');
       const cardSimple = card.generateCard();
       cardsList.addItem(cardSimple);
     }
   }, '.elements__grid'
 )
-
 cardsList.renderAll();
 
 btnEditProfile.addEventListener('click', btnEditProfileHandler);
 function btnEditProfileHandler() {
-  inputName.value = profileName.textContent;
-  inputAbout.value = profileAbout.textContent;
+  userInfo.getUserInfo();
   editProfileFormValidator.cleaningForm();
-  openPopUp(popUpEditProfile);
+  popupEditProfile.openPopup();
 }
 
 btnAddCard.addEventListener('click', btnAddCardHandler);
 function btnAddCardHandler () {
-  formPopupAddCard.reset();
   addCardFormValidator.cleaningForm();
-  openPopUp(popUpAddCard);
+  popupAddCard.openPopup();
 }
 
-formPopupEditProfile.addEventListener('submit', editFormSubmit);
 function editFormSubmit(event) {
   event.preventDefault();
-  profileName.textContent = inputName.value;
-  profileAbout.textContent = inputAbout.value;
-  closePopUp(popUpEditProfile);
+  userInfo.setUserInfo();
+  console.log(popupEditProfile._getInputValues());
+  popupEditProfile.closePopup();
 }
 
-formPopupAddCard.addEventListener('submit', addCardFormSubmit);
 function addCardFormSubmit(event) {
   event.preventDefault();
-  const addedCard = [{name: inputPlace.value, link: inputLink.value}];
-  // addCard(cardsGrid, addedCard);
+  console.log('просто работаю')
+  const addedCard = [{
+    name: inputPlace.value,
+    link: inputLink.value
+  }];
   const cardsList = new Section({
     itemCardsData: addedCard,
     renderer: (item) => {
-        const card = new Card(item, '#card');
+        const card = new Card(item, popupImg.openPopup, '#card');
         const cardSimple = card.generateCard();
         cardsList.addItem(cardSimple);
       }
     }, '.elements__grid'
   )
   cardsList.renderAll();
-  closePopUp(popUpAddCard);
+  popupAddCard.closePopup();
 }
-
-buttonsClose.forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    const popup = btn.closest('.popup');
-    closePopUp(popup);
-  });
-});
-
-popUps.forEach(function(popup) {
-  popup.addEventListener('click', function(evt) {
-    if (evt.target === evt.currentTarget) {
-      closePopUp(popup);
-    }
-  });
-});
