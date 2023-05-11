@@ -4,24 +4,24 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./pages/index.css">
+  <!-- <link rel="stylesheet" href="./pages/index.css"> -->
   <title>Место</title>
 </head>
 <body class="page">
   <div class="wrapper">
     <header class="header page__center">
-      <img src="./images/logo/logo.svg" alt="логотип" class="header__logo">
+      <img src="<%=require('./images/logo/logo.svg')%>" alt="логотип" class="header__logo">
     </header>
     <main class="main page__center">
       <section class="profile">
-        <img src="./images/avatar.jpg" alt="фотография героя" class="profile__avatar">
+        <img src="<%=require('./images/avatar.jpg')%>" alt="фотография героя" class="profile__avatar">
         <div class="profile__inner">
           <h1 class="profile__title">Жак-Ив Кусто</h1>
           <p class="profile__subtitle">Исследователь океана</p>
-          <button class="profile__btn-edit" type="button"><img src="./images/icon/edit.svg" alt="карандаш" class="profile__pic-edit">
+          <button class="profile__btn-edit" type="button"><img src="<%=require('./images/icon/edit.svg')%>" alt="карандаш" class="profile__pic-edit">
           </button>
         </div>
-        <button class="profile__btn-add" type="button"><img src="./images/icon/add.svg" alt="добавить" class="profile__pic-add">
+        <button class="profile__btn-add" type="button"><img src="<%=require('./images/icon/add.svg')%>" alt="добавить" class="profile__pic-add">
         </button>
       </section>
       <section class="elements" aria-label="Фотогалерея">
@@ -61,7 +61,7 @@
         </fieldset>
         <button type="submit" class="popup__submit" >Сохранить</button>
       </form>
-      <button class="popup__closed" type="button"><img src="./images/icon/close_icon.svg" alt="закрыть всплывающее окно" class="popup__pic-closed"></button>
+      <button class="popup__closed" type="button"><img src="<%=require('./images/icon/close_icon.svg')%>" alt="закрыть всплывающее окно" class="popup__pic-closed"></button>
     </div>
   </div>
   <div class="popup popup_overlay_middle popup_add">
@@ -82,7 +82,7 @@
         </fieldset>
         <button type="submit" class="popup__submit">Создать</button>
       </form>
-      <button class="popup__closed" type="button"><img src="./images/icon/close_icon.svg" alt="закрыть всплывающее окно" class="popup__pic-closed"></button>
+      <button class="popup__closed" type="button"><img src="<%=require('./images/icon/close_icon.svg')%>" alt="закрыть всплывающее окно" class="popup__pic-closed"></button>
     </div>
   </div>
   <div class="popup popup_overlay_dark popup_img">
@@ -91,10 +91,11 @@
           <img src="/" alt="" class="popup__image">
           <figcaption class="popup__caption"></figcaption>
         </figure>
-        <button class="popup__closed" type="button"><img src="./images/icon/close_icon.svg" alt="закрыть всплывающее окно" class="popup__pic-closed"></button>
+        <button class="popup__closed" type="button"><img src="<%=require('./images/icon/close_icon.svg')%>" alt="закрыть всплывающее окно" class="popup__pic-closed"></button>
       </div>
   </div>
-  <script src="./scripts/constants.js"></script>
-  <script type="module" src="./scripts/index.js"></script>
+  <!-- <script src="./utils/constants.js"></script>
+  <script type="module" src="./index.js"></script> -->
+
 </body>
 </html>
