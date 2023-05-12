@@ -1,8 +1,8 @@
 /* Данный класс отвечает за открытие и закрытие модальных окон. Принимает в конструктор класса селектор всплывающего окна. */
 
 export default class Popup {
-  constructor(modal) {
-    this._selector = modal;
+  constructor(selector) {
+    this._selector = document.querySelector(selector);
     this._btnClose = this._selector.querySelector('.popup__closed');
   }
 
@@ -10,7 +10,6 @@ export default class Popup {
     console.log('i work?????');
     this._selector.classList.add('popup_opened');
     document.addEventListener('keydown', this._handleEscClose);
-    this.setEventListeners();
   }
 
   closePopup() {

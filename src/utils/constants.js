@@ -1,4 +1,4 @@
-export const initialCards = [
+const initialCards = [
   {
     name: 'Архыз',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
@@ -25,6 +25,8 @@ export const initialCards = [
   }
 ];
 
+export const initialCardsReverse = initialCards.slice().reverse();
+
 export const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
@@ -35,17 +37,7 @@ export const validationConfig = {
   inputHintClass: 'popup__input-hint_attached'
 };
 
-export const popUpImg = document.querySelector('.popup_img');
 export const popUpEditProfile = document.querySelector('.popup_edit');
 export const btnEditProfile = document.querySelector('.profile__btn-edit');
 export const popUpAddCard = document.querySelector('.popup_add');
 export const btnAddCard = document.querySelector('.profile__btn-add');
-
-const inputName = popUpEditProfile.querySelector('.popup__input_name_name');
-const inputAbout = popUpEditProfile.querySelector('.popup__input_name_about');
-export const dataInputs = {
-  name: inputName,
-  about: inputAbout
-}
-export const inputPlace = popUpAddCard.querySelector('.popup__input_name_place')
-export const inputLink = popUpAddCard.querySelector('.popup__input_name_link')

@@ -1,26 +1,22 @@
 import {
-  initialCards,
+  initialCardsReverse,
   validationConfig,
-  popUpImg,
   popUpEditProfile,
   btnEditProfile,
   popUpAddCard,
   btnAddCard,
-  dataInputs,
-  inputLink,
-  inputPlace
-} from './utils/constants.js';
+} from '../utils/constants.js';
 
-import FormValidator from './components/FormValidator.js';
-import Card from './components/Card.js';
-import Section from './components/Section.js';
-import PopupWithImage from './components/PopupWithImage.js';
-import PopupWithForm from './components/PopupWithForm.js';
-import UserInfo from './components/UserInfo.js';
+import FormValidator from '../components/FormValidator.js';
+import Card from '../components/Card.js';
+import Section from '../components/Section.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
 
-import './pages/index.css';
+import './index.css';
 
-/* Не знаю какой способ лучше для указания пути к картинкам в файле index.html, поэтому прописал два варианта */
+/* Не знаю какой способ лучше для указания пути к картинкам в файле index.html, поэтому прописал два варианта. И все же что лучше при работе с Webpack: менять адреса в index.html или прописывать через index.js??? */
 // import logo from './images/logo/logo.svg';
 // const logoImg = document.querySelector('.header__logo');
 // logoImg.src = logo;
@@ -44,22 +40,29 @@ const addCardFormValidator = new FormValidator(validationConfig, popUpAddCard);
 addCardFormValidator.enableValidation();
 
 //Экземпляры соответствующих всплывающих окон:
-const popupImg = new PopupWithImage(popUpImg);
-const popupEditProfile = new PopupWithForm(popUpEditProfile, editFormSubmit);
-
-const popupAddCard = new PopupWithForm(popUpAddCard, addCardFormSubmit);
+const popupImg = new PopupWithImage('.popup_img');
+popupImg.setEventListeners();
+const popupEditProfile = new PopupWithForm('.popup_edit', editFormSubmit);
+popupEditProfile.setEventListeners();
+const popupAddCard = new PopupWithForm('.popup_add', addCardFormSubmit);
+popupAddCard.setEventListeners();
 
 //Экземпляр класса UserInfo:
-const userInfo = new UserInfo(dataInputs);
-console.log(userInfo.getUserInfo());
+const userInfo = new UserInfo({
+  userNameSelector:'.profile__title',
+  userAboutSelector: '.profile__subtitle'
+});
 
 //Создание карточек и загрузочного контента:
+function createCard(itemCardsData) {
+  const card = new Card(itemCardsData, popupImg.openPopup, '#card');
+  return card.generateCard();
+}
+
 const cardsList = new Section({
-  itemCardsData: initialCards,
+  itemCardsData: initialCardsReverse,
   renderer: (item) => {
-      const card = new Card(item, popupImg.openPopup, '#card');
-      const cardSimple = card.generateCard();
-      cardsList.addItem(cardSimple);
+      cardsList.addItem(createCard(item));
     }
   }, '.elements__grid'
 )
@@ -67,7 +70,7 @@ cardsList.renderAll();
 
 btnEditProfile.addEventListener('click', btnEditProfileHandler);
 function btnEditProfileHandler() {
-  userInfo.getUserInfo();
+  popupEditProfile.setInputValues(userInfo.getUserInfo());
   editProfileFormValidator.cleaningForm();
   popupEditProfile.openPopup();
 }
@@ -78,29 +81,13 @@ function btnAddCardHandler () {
   popupAddCard.openPopup();
 }
 
-function editFormSubmit(event) {
-  event.preventDefault();
-  userInfo.setUserInfo();
-  console.log(popupEditProfile._getInputValues());
+function editFormSubmit(dataInput) {
+  userInfo.setUserInfo(dataInput);
   popupEditProfile.closePopup();
 }
 
-function addCardFormSubmit(event) {
-  event.preventDefault();
-  console.log('просто работаю')
-  const addedCard = [{
-    name: inputPlace.value,
-    link: inputLink.value
-  }];
-  const cardsList = new Section({
-    itemCardsData: addedCard,
-    renderer: (item) => {
-        const card = new Card(item, popupImg.openPopup, '#card');
-        const cardSimple = card.generateCard();
-        cardsList.addItem(cardSimple);
-      }
-    }, '.elements__grid'
-  )
-  cardsList.renderAll();
+function addCardFormSubmit(dataInput) {
+  console.log(dataInput);
+  cardsList.addItem(createCard(dataInput));
   popupAddCard.closePopup();
 }

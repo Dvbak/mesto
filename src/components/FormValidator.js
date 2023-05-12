@@ -84,7 +84,6 @@ class FormValidator {
   }
 
   enableValidation() {
-    console.log(this._formSelector);
     this._formSelector.addEventListener('submit', (evt) => {
       evt.preventDefault();
     });
