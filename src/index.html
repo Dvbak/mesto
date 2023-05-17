@@ -32,7 +32,10 @@
               <button class="elements__btn-delet" type="button"></button>
               <div class="elements__inner">
                 <h2 class="elements__title"></h2>
-                <button class="elements__btn" type="button"></button>
+                <div class="elements__box">
+                  <button class="elements__btn" type="button"></button>
+                  <p class="elements__count">0</p>
+                </div>
               </div>
             </li>
           </template>
@@ -64,6 +67,22 @@
       <button class="popup__closed" type="button"><img src="<%=require('./images/icon/close_icon.svg')%>" alt="закрыть всплывающее окно" class="popup__pic-closed"></button>
     </div>
   </div>
+  <div class="popup popup_overlay_middle popup_update">
+    <div class="popup__container">
+      <h2 class="popup__title">Обновить аватар</h2>
+      <form action="#" class="popup__form" name="popupform" novalidate>
+        <fieldset class="popup__field">
+          <label class="popup__field-label">
+            <input type="url" id="link-input" name="link" value="" required class="popup__input popup__input_name_link">
+            <span class="popup__input-hint link-input-hint">Ссылка на фотографию</span>
+            <span class="link-input-error popup__input-error"></span>
+          </label>
+        </fieldset>
+        <button type="submit" class="popup__submit">Сохранить</button>
+      </form>
+      <button class="popup__closed" type="button"><img src="<%=require('./images/icon/close_icon.svg')%>" alt="закрыть всплывающее окно" class="popup__pic-closed"></button>
+    </div>
+  </div>
   <div class="popup popup_overlay_middle popup_add">
     <div class="popup__container">
       <h2 class="popup__title">Новое место</h2>
@@ -81,6 +100,15 @@
           </label>
         </fieldset>
         <button type="submit" class="popup__submit">Создать</button>
+      </form>
+      <button class="popup__closed" type="button"><img src="<%=require('./images/icon/close_icon.svg')%>" alt="закрыть всплывающее окно" class="popup__pic-closed"></button>
+    </div>
+  </div>
+  <div class="popup popup_overlay_middle popup_delet">
+    <div class="popup__container">
+      <h2 class="popup__title">Вы уверены?</h2>
+      <form action="#" class="popup__form" name="popupform" novalidate>
+        <button type="submit" class="popup__submit">Да</button>
       </form>
       <button class="popup__closed" type="button"><img src="<%=require('./images/icon/close_icon.svg')%>" alt="закрыть всплывающее окно" class="popup__pic-closed"></button>
     </div>
