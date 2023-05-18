@@ -5,6 +5,9 @@ import {
   btnEditProfile,
   popUpAddCard,
   btnAddCard,
+  popUpUpdateAvatar,
+  btnUpdateAvatar,
+  popUpDeletCard
 } from '../utils/constants.js';
 
 import FormValidator from '../components/FormValidator.js';
@@ -16,28 +19,14 @@ import UserInfo from '../components/UserInfo.js';
 
 import './index.css';
 
-/* Не знаю какой способ лучше для указания пути к картинкам в файле index.html, поэтому прописал два варианта. И все же что лучше при работе с Webpack: менять адреса в index.html или прописывать через index.js??? */
-// import logo from './images/logo/logo.svg';
-// const logoImg = document.querySelector('.header__logo');
-// logoImg.src = logo;
-// import avatar from './images/avatar.jpg';
-// const avatarImg = document.querySelector('.profile__avatar');
-// avatarImg.src = avatar;
-// import edit from './images/icon/edit.svg';
-// const editImg = document.querySelector('.profile__pic-edit');
-// editImg.src = edit;
-// import add from './images/icon/add.svg';
-// const addImg = document.querySelector('.profile__pic-add');
-// addImg.src = add;
-// import close from './images/icon/close_icon.svg';
-// const closeImg = document.querySelectorAll('.popup__pic-closed');
-// closeImg.forEach((item) => item.src = close);
 
-//Экземпляры валидаторов форм для каждого модального окна:
+//Экземпляры валидаторов форм для каждого модального окна с формой:
 const editProfileFormValidator = new FormValidator(validationConfig, popUpEditProfile);
 editProfileFormValidator.enableValidation();
 const addCardFormValidator = new FormValidator(validationConfig, popUpAddCard);
 addCardFormValidator.enableValidation();
+const updateAvatarFormValidator = new FormValidator(validationConfig, popUpUpdateAvatar);
+updateAvatarFormValidator.enableValidation();
 
 //Экземпляры соответствующих всплывающих окон:
 const popupImg = new PopupWithImage('.popup_img');
@@ -46,6 +35,8 @@ const popupEditProfile = new PopupWithForm('.popup_edit', editFormSubmit);
 popupEditProfile.setEventListeners();
 const popupAddCard = new PopupWithForm('.popup_add', addCardFormSubmit);
 popupAddCard.setEventListeners();
+const popupUpdateAvatar = new PopupWithForm('.popup_update', updateAvatarFormSubmit);
+popupUpdateAvatar.setEventListeners();
 
 //Экземпляр класса UserInfo:
 const userInfo = new UserInfo({
@@ -81,6 +72,12 @@ function btnAddCardHandler () {
   popupAddCard.openPopup();
 }
 
+btnUpdateAvatar.addEventListener('click', btnUpdateAvatarHandler);
+function btnUpdateAvatarHandler () {
+  updateAvatarFormValidator.cleaningForm();
+  popupUpdateAvatar.openPopup();
+}
+
 function editFormSubmit(dataInput) {
   userInfo.setUserInfo(dataInput);
   popupEditProfile.closePopup();
@@ -90,4 +87,10 @@ function addCardFormSubmit(dataInput) {
   console.log(dataInput);
   cardsList.addItem(createCard(dataInput));
   popupAddCard.closePopup();
+}
+
+function updateAvatarFormSubmit(dataInput) {
+  btnUpdateAvatar.src = dataInput.link;
+  console.log(dataInput);
+  popupUpdateAvatar.closePopup();
 }
