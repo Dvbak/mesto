@@ -14,7 +14,10 @@
     </header>
     <main class="main page__center">
       <section class="profile">
-        <img src="<%=require('./images/avatar.jpg')%>" alt="фотография героя" class="profile__avatar">
+        <div class="profile__box-img">
+          <img src="<%=require('./images/avatar.jpg')%>" alt="фотография героя" class="profile__avatar"  tabindex="0">
+          <img src="<%=require('./images/icon/edit.svg')%>" alt="фотография героя" class="profile__avatar-edit">
+        </div>
         <div class="profile__inner">
           <h1 class="profile__title">Жак-Ив Кусто</h1>
           <p class="profile__subtitle">Исследователь океана</p>

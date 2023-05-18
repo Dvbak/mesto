@@ -12,7 +12,9 @@
 
 /*------------Start Profile------------*/
 @import url(../blocks/profile/profile.css);
+@import url(../blocks/profile/__box-img/profile__box-img.css);
 @import url(../blocks/profile/__avatar/profile__avatar.css);
+@import url(../blocks/profile/__avatar-edit/profile__avatar-edit.css);
 @import url(../blocks/profile/__inner/profile__inner.css);
 @import url(../blocks/profile/__title/profile__title.css);
 @import url(../blocks/profile/__subtitle/profile__subtitle.css);
