@@ -5,10 +5,11 @@ _handlerDeletCard() - удаление карточки;
 Данный класс импортируется в файл index.js в котором и создаются экземпляры для каждой карточки */
 
 export default class Card {
-  constructor(cardsData, handlerOpenImg, selector) {
+  constructor(cardsData, handlerOpenImg, handlerDeletCard, selector) {
     this._name = cardsData.name;
     this._link = cardsData.link;
     this._handlerOpenImg = handlerOpenImg;
+    this._handlerDeletCard = handlerDeletCard;
     this._selector = selector;
   }
 
@@ -37,17 +38,21 @@ export default class Card {
     this._likeBtn.classList.toggle('elements__btn_like');
   }
 
-  _handlerDeletCard() {
+  deletCard() {
     this._deletBtn.closest('.elements__item').remove();
   }
-  // _handlerOpenImg() {
-  //   this._handleOpenImg(this._link, this._name);
+
+  // _handleDeletCard() {
+  //   this._handlerDeletCard(this);
+  // }
+  // _handleOpenImg() {
+  //   this._handlerOpenImg(this._link, this._name);
   // }
 
   _setEventListeners() {
     this._likeBtn.addEventListener('click', () => this._handlerAddLike());
 
-    this._deletBtn.addEventListener('click', () => this._handlerDeletCard());
+    this._deletBtn.addEventListener('click', () => this._handlerDeletCard(this));
 
     this._cardImg.addEventListener('click', () => this._handlerOpenImg(this._link, this._name));
   }

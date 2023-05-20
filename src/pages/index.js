@@ -7,7 +7,6 @@ import {
   btnAddCard,
   popUpUpdateAvatar,
   btnUpdateAvatar,
-  popUpDeletCard
 } from '../utils/constants.js';
 
 import FormValidator from '../components/FormValidator.js';
@@ -15,6 +14,7 @@ import Card from '../components/Card.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithDelet from '../components/PopupWithDelet.js';
 import UserInfo from '../components/UserInfo.js';
 
 import './index.css';
@@ -37,6 +37,8 @@ const popupAddCard = new PopupWithForm('.popup_add', addCardFormSubmit);
 popupAddCard.setEventListeners();
 const popupUpdateAvatar = new PopupWithForm('.popup_update', updateAvatarFormSubmit);
 popupUpdateAvatar.setEventListeners();
+const popupDeletCard = new PopupWithDelet('.popup_delet', deletCardFormSubmit);
+popupDeletCard.setEventListeners();
 
 //Экземпляр класса UserInfo:
 const userInfo = new UserInfo({
@@ -46,7 +48,7 @@ const userInfo = new UserInfo({
 
 //Создание карточек и загрузочного контента:
 function createCard(itemCardsData) {
-  const card = new Card(itemCardsData, popupImg.openPopup, '#card');
+  const card = new Card(itemCardsData, popupImg.openPopup, popupDeletCard.openPopup, '#card');
   return card.generateCard();
 }
 
@@ -93,4 +95,10 @@ function updateAvatarFormSubmit(dataInput) {
   btnUpdateAvatar.src = dataInput.link;
   console.log(dataInput);
   popupUpdateAvatar.closePopup();
+}
+
+function deletCardFormSubmit(card) {
+  console.log(card);
+  card.deletCard();
+  popupDeletCard.closePopup();
 }
