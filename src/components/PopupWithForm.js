@@ -8,6 +8,8 @@ export default class PopupWithForm extends Popup {
     this._selectorForm = this._modal.querySelector('.popup__form');
     this._submitForm = formSubmit;
     this._inputsList = this._modal.querySelectorAll('.popup__input');
+    this._btnSubmit = this._modal.querySelector('.popup__submit');
+    this._textSubmit = this._btnSubmit.textContent;
   }
 
   closePopup() {
@@ -26,13 +28,18 @@ export default class PopupWithForm extends Popup {
     this._inputsList.forEach((item) => item.value = dataInput[item.name]);
   }
 
-  _handleSubmitForm = (event) => {
-    event.preventDefault();
+  _handleSubmitForm = (evt) => {
+    evt.preventDefault();
+    this._btnSubmit.textContent = 'Сохранение...'
     this._submitForm(this._getInputValues());
   }
 
   setEventListeners() {
     super.setEventListeners();
     this._selectorForm.addEventListener('submit', this._handleSubmitForm);
+  }
+
+  resetTextLoader() {
+    this._btnSubmit.textContent = this._textSubmit;
   }
 }

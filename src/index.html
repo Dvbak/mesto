@@ -15,12 +15,12 @@
     <main class="main page__center">
       <section class="profile">
         <div class="profile__box-img">
-          <img src="<%=require('./images/avatar.jpg')%>" alt="фотография героя" class="profile__avatar"  tabindex="0">
-          <img src="<%=require('./images/icon/edit.svg')%>" alt="фотография героя" class="profile__avatar-edit">
+          <img src="#" alt="Аватар" class="profile__avatar"  tabindex="0">
+          <img src="<%=require('./images/icon/edit.svg')%>" alt="Редактировать" class="profile__avatar-edit">
         </div>
         <div class="profile__inner">
-          <h1 class="profile__title">Жак-Ив Кусто</h1>
-          <p class="profile__subtitle">Исследователь океана</p>
+          <h1 class="profile__title"></h1>
+          <p class="profile__subtitle"></p>
           <button class="profile__btn-edit" type="button"><img src="<%=require('./images/icon/edit.svg')%>" alt="карандаш" class="profile__pic-edit">
           </button>
         </div>
@@ -76,9 +76,9 @@
       <form action="#" class="popup__form" name="popupform" novalidate>
         <fieldset class="popup__field">
           <label class="popup__field-label">
-            <input type="url" id="link-input" name="link" value="" required class="popup__input popup__input_name_link">
-            <span class="popup__input-hint link-input-hint">Ссылка на фотографию</span>
-            <span class="link-input-error popup__input-error"></span>
+            <input type="url" id="link-inputUpdate" name="link" value="" required class="popup__input popup__input_name_link">
+            <span class="popup__input-hint link-inputUpdate-hint">Ссылка на фотографию</span>
+            <span class="link-inputUpdate-error popup__input-error"></span>
           </label>
         </fieldset>
         <button type="submit" class="popup__submit">Сохранить</button>

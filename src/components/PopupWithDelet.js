@@ -9,17 +9,19 @@ export default class PopupWithDelet extends Popup {
     this._submitForm = formSubmit;
   }
 
-  setEventListeners() {
-    super.setEventListeners();
-    this._selectorForm.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-      this._submitForm(this.deletCard);
-    })
+  _handleSubmitForm = (evt) => {
+    evt.preventDefault();
+    this._submitForm(this._deletCard, this._deletCardId);
   }
 
-  openPopup = (card) => {
-    this.deletCard = card;
-    console.log (this.deletCard);
+  setEventListeners() {
+    super.setEventListeners();
+    this._selectorForm.addEventListener('submit', this._handleSubmitForm);
+  }
+
+  openPopup = (card, cardId) => {
+    this._deletCard = card;
+    this._deletCardId = cardId;
     super.openPopup();
   }
 }
