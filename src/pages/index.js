@@ -1,11 +1,11 @@
 import {
   validationConfig,
-  popUpEditProfile,
   btnEditProfile,
-  popUpAddCard,
+  formEditProfile,
   btnAddCard,
-  popUpUpdateAvatar,
+  formAddCard,
   updateAvatar,
+  formUpdateAvatar
 } from '../utils/constants.js';
 
 import FormValidator from '../components/FormValidator.js';
@@ -31,31 +31,32 @@ const api = new Api({
 });
 
 //Экземпляры валидаторов форм для каждого модального окна с формой:
-const editProfileFormValidator = new FormValidator(validationConfig, popUpEditProfile);
+const editProfileFormValidator = new FormValidator(validationConfig, formEditProfile);
 editProfileFormValidator.enableValidation();
-const addCardFormValidator = new FormValidator(validationConfig, popUpAddCard);
+const addCardFormValidator = new FormValidator(validationConfig, formAddCard);
 addCardFormValidator.enableValidation();
-const updateAvatarFormValidator = new FormValidator(validationConfig, popUpUpdateAvatar);
+const updateAvatarFormValidator = new FormValidator(validationConfig, formUpdateAvatar);
 updateAvatarFormValidator.enableValidation();
 
 //Экземпляры соответствующих всплывающих окон:
 const popupImg = new PopupWithImage('.popup_img');
 popupImg.setEventListeners();
-const popupEditProfile = new PopupWithForm('.popup_edit', editFormSubmit);
+const popupEditProfile = new PopupWithForm('.popup_edit', handleEditFormSubmit);
 popupEditProfile.setEventListeners();
-const popupAddCard = new PopupWithForm('.popup_add', addCardFormSubmit);
+const popupAddCard = new PopupWithForm('.popup_add', handleAddCardFormSubmit);
 popupAddCard.setEventListeners();
-const popupUpdateAvatar = new PopupWithForm('.popup_update', updateAvatarFormSubmit);
+const popupUpdateAvatar = new PopupWithForm('.popup_update', handleAvatarFormSubmit);
 popupUpdateAvatar.setEventListeners();
-const popupDeletCard = new PopupWithDelet('.popup_delet', deletCardFormSubmit);
+const popupDeletCard = new PopupWithDelet('.popup_delet', handleDelCardFormSubmit);
 popupDeletCard.setEventListeners();
 
-//Экземпляр класса UserInfo:
+//Экземпляр класса UserInfo (userId будет внутри экземпляра объявлен, а значение получит после запроса на сервер):
 const userInfo = new UserInfo({
   userNameSelector:'.profile__title',
   userAboutSelector: '.profile__subtitle',
   userAvatarSelector: '.profile__avatar'
 });
+console.log(userInfo);
 
 
 //Функция переключения лайков:
@@ -91,54 +92,54 @@ const cardsList = new Section((item) => {
 btnEditProfile.addEventListener('click', btnEditProfileHandler);
 function btnEditProfileHandler() {
   popupEditProfile.setInputValues(userInfo.getUserInfo());
-  editProfileFormValidator.cleaningForm();
+  editProfileFormValidator.resetValidation();
   popupEditProfile.openPopup();
 }
 
 btnAddCard.addEventListener('click', btnAddCardHandler);
 function btnAddCardHandler () {
-  addCardFormValidator.cleaningForm();
+  addCardFormValidator.resetValidation();
   popupAddCard.openPopup();
 }
 
 updateAvatar.addEventListener('click', btnUpdateAvatarHandler);
 function btnUpdateAvatarHandler () {
-  updateAvatarFormValidator.cleaningForm();
+  updateAvatarFormValidator.resetValidation();
   popupUpdateAvatar.openPopup();
 }
 
-function editFormSubmit(dataInput) {
+function handleEditFormSubmit(dataInput) {
   api.setInfoProfile(dataInput)
     .then(res => {
-      userInfo.setUserInfo(res)
+      userInfo.setUserInfo(res);
+      popupEditProfile.closePopup();
     })
     .catch(err => console.error('Ошибка изменения профиля: ', err.message))
     .finally(() => popupEditProfile.resetTextLoader());
-  popupEditProfile.closePopup();
 }
 
-function addCardFormSubmit(dataInput) {
-  Promise.all([api.getInfo(), api.addCard(dataInput)])
-    .then(([dataUser, dataCard]) => {
-      dataCard.myId = dataUser._id;
-      cardsList.addItem(createCard(dataCard))
+function handleAddCardFormSubmit(dataInput) {
+  api.addCard(dataInput)
+    .then((dataCard) => {
+      dataCard.myId = userInfo.getUserId();
+      cardsList.addItem(createCard(dataCard));
+      popupAddCard.closePopup();
     })
     .catch(err => console.error('Ошибка добавления новой карточки: ', err.message))
     .finally(() => popupAddCard.resetTextLoader());
-  popupAddCard.closePopup();
 }
 
-function updateAvatarFormSubmit(dataInput) {
+function handleAvatarFormSubmit(dataInput) {
   api.setAvatar(dataInput)
     .then(res => {
-      userInfo.setUserInfo(res)
+      userInfo.setUserInfo(res);
+      popupUpdateAvatar.closePopup();
     })
     .catch(err => console.error('Ошибка изменения аватара: ', err.message))
     .finally(() => popupUpdateAvatar.resetTextLoader());
-  popupUpdateAvatar.closePopup();
 }
 
-function deletCardFormSubmit(card, cardId) {
+function handleDelCardFormSubmit(card, cardId) {
   api.deletCard(cardId)
     .then(() => {
       card.deletCard();
@@ -154,7 +155,6 @@ Promise.all([api.getInfo(), api.getInitialCards()])
     // console.log(dataCards);
     dataCards.forEach(card => card.myId = dataUser._id);
     userInfo.setUserInfo(dataUser);
-    console.log(userInfo.getUserInfo().avatar);
     cardsList.renderAll(dataCards.reverse());
   })
   .catch(err => console.error('Ошибка загрузки страницы: ', err.message))

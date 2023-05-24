@@ -1,24 +1,26 @@
 /* Данный класс настравает валидацию полей формы. Принимает в конструктор объект настроек с селекторами и классами (options) и ссылку на проверяемую форму (modal). Имеет приватные (защищенные) методы для проверки валидности полей (_isValid(input)), изменения состояния кнопки сабмита (_toggleSubmitButton(inputsList)), появления/скрытия всплыващих пласхолдеров (_toggleInputHint(input)), установки обработчиков инпут событий (_setEventListeners()).
 Реализовано два публичных метода:
 enableValidation(), включающий валидацию формы;
-cleaningForm(), предназначенный для чистки форм в случае закрытия без сохранения данных.
+resetValidation(), предназначенный для чистки форм в случае закрытия без сохранения данных.
 Класс FormValidator импортируется в файл index.js. Экземпляры класса создаются при отработке кликов на соответствующих кнопках инициализации модальных окон в файле index.js. */
 
 class FormValidator {
-  constructor(options, modal) {
-    this._formSelector = modal.querySelector(options.formSelector);
+  constructor(options, formModal) {
+    this._formModal = formModal;
+    // this._formModal = modal.querySelector(options.formSelector);
+    /* Действительно, если рассматривать с точки зрения чистоты класса, то попапы здесь не нужны. Тогда не понятно зачем в validationConfig есть поле formSelector, этот параметр используется только в первой строке данного класса. И что лучше - одна строка кода в данном классе или три строки в constante.js*/
     this._input = options.inputSelector;
     this._inputError = options.inputErrorClass;
     this._error = options.errorClass;
-    this._submitButton = options.submitButtonSelector;
+    this._submitButton = this._formModal.querySelector(options.submitButtonSelector);
     this._inactiveButton = options.inactiveButtonClass;
     this._inputHint = options.inputHintClass;
-    this._inputsList = modal.querySelectorAll(options.inputSelector);
+    this._inputsList = formModal.querySelectorAll(options.inputSelector);
   }
 
   _showInputError(input) {
     input.classList.add(this._inputError);
-    const textInputError = this._formSelector.querySelector(`.${input.id}-error`);
+    const textInputError = this._formModal.querySelector(`.${input.id}-error`);
     textInputError.textContent = input.validationMessage;
     console.log(textInputError);
     textInputError.classList.add(this._error);
@@ -26,7 +28,7 @@ class FormValidator {
 
   _hideInputError(input) {
     input.classList.remove(this._inputError);
-    const textInputError = this._formSelector.querySelector(`.${input.id}-error`);
+    const textInputError = this._formModal.querySelector(`.${input.id}-error`);
     textInputError.textContent = '';
     textInputError.classList.remove(this._error);
   }
@@ -40,13 +42,13 @@ class FormValidator {
   }
 
   _enableSubmitButton() {
-    this._formSelector.querySelector(this._submitButton).classList.remove(this._inactiveButton);
-    this._formSelector.querySelector(this._submitButton).removeAttribute('disabled');
+    this._submitButton.classList.remove(this._inactiveButton);
+    this._submitButton.removeAttribute('disabled');
   }
 
   _disableSubmitButton() {
-    this._formSelector.querySelector(this._submitButton).classList.add(this._inactiveButton);
-    this._formSelector.querySelector(this._submitButton).setAttribute('disabled', true);
+    this._submitButton.classList.add(this._inactiveButton);
+    this._submitButton.setAttribute('disabled', true);
   }
 
   _hasInvalidInput() {
@@ -65,8 +67,8 @@ class FormValidator {
 
   _toggleInputHint(input) {
     if (input.value !== '') {
-      this._formSelector.querySelector(`.${input.id}-hint`).classList.add(this._inputHint);
-    } else this._formSelector.querySelector(`.${input.id}-hint`).classList.remove(this._inputHint);
+      this._formModal.querySelector(`.${input.id}-hint`).classList.add(this._inputHint);
+    } else this._formModal.querySelector(`.${input.id}-hint`).classList.remove(this._inputHint);
   }
 
   _handlerInput(item) {
@@ -84,18 +86,18 @@ class FormValidator {
   }
 
   enableValidation() {
-    this._formSelector.addEventListener('submit', (evt) => {
+    this._formModal.addEventListener('submit', (evt) => {
       evt.preventDefault();
     });
     this._setEventListeners();
   }
 
-  cleaningForm() {
+  resetValidation() {
     this._inputsList.forEach((input) => {
       this._hideInputError(input);
       this._toggleInputHint(input);
     });
-    if (!this._formSelector.querySelector(this._submitButton).classList.contains(this._inactiveButton)) {
+    if (!this._submitButton.classList.contains(this._inactiveButton)) {
       this._disableSubmitButton();
     }
   }

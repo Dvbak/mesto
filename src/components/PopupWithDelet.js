@@ -5,7 +5,7 @@ import Popup from './Popup.js';
 export default class PopupWithDelet extends Popup {
   constructor(selector, formSubmit) {
     super(selector);
-    this._selectorForm = this._modal.querySelector('.popup__form');
+    this._modalForm = this._modal.querySelector('.popup__form');
     this._submitForm = formSubmit;
   }
 
@@ -16,7 +16,7 @@ export default class PopupWithDelet extends Popup {
 
   setEventListeners() {
     super.setEventListeners();
-    this._selectorForm.addEventListener('submit', this._handleSubmitForm);
+    this._modalForm.addEventListener('submit', this._handleSubmitForm);
   }
 
   openPopup = (card, cardId) => {

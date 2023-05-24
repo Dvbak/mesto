@@ -7,13 +7,20 @@ export default class Api {
     this._passkey = options.headers.authorization;
   }
 
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+
   getInfo() {
     return fetch (`${this._baseUrl}/users/me`, {
       headers: {
         authorization: this._passkey
       }
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+    .then(this._checkResponse)
   }
 
   getInitialCards() {
@@ -22,7 +29,7 @@ export default class Api {
         authorization: this._passkey
       }
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+    .then(this._checkResponse)
   }
 
   setInfoProfile(data) {
@@ -34,7 +41,7 @@ export default class Api {
         about: data.about
       })
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+    .then(this._checkResponse)
   }
 
   setAvatar(data) {
@@ -45,7 +52,7 @@ export default class Api {
         avatar: data.link
       })
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+    .then(this._checkResponse)
   }
 
   addCard(data) {
@@ -57,7 +64,7 @@ export default class Api {
         link: data.link
       })
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+    .then(this._checkResponse)
   }
 
   deletCard(cardId) {
@@ -67,7 +74,7 @@ export default class Api {
         authorization: this._passkey
       }
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+    .then(this._checkResponse)
   }
 
   addLike(cardId) {
@@ -77,7 +84,7 @@ export default class Api {
         authorization: this._passkey
       }
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+    .then(this._checkResponse)
   }
 
   deletLike(cardId) {
@@ -87,6 +94,6 @@ export default class Api {
         authorization: this._passkey
       }
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+    .then(this._checkResponse)
   }
 }

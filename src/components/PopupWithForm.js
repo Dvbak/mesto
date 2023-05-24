@@ -5,7 +5,7 @@ import Popup from './Popup.js';
 export default class PopupWithForm extends Popup {
   constructor(selector, formSubmit) {
     super(selector);
-    this._selectorForm = this._modal.querySelector('.popup__form');
+    this._modalForm = this._modal.querySelector('.popup__form');
     this._submitForm = formSubmit;
     this._inputsList = this._modal.querySelectorAll('.popup__input');
     this._btnSubmit = this._modal.querySelector('.popup__submit');
@@ -15,7 +15,7 @@ export default class PopupWithForm extends Popup {
   closePopup() {
     console.log('и я работаю!');
     super.closePopup();
-    this._selectorForm.reset();
+    this._modalForm.reset();
   }
 
   _getInputValues() {
@@ -36,7 +36,7 @@ export default class PopupWithForm extends Popup {
 
   setEventListeners() {
     super.setEventListeners();
-    this._selectorForm.addEventListener('submit', this._handleSubmitForm);
+    this._modalForm.addEventListener('submit', this._handleSubmitForm);
   }
 
   resetTextLoader() {
