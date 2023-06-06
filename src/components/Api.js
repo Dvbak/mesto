@@ -14,23 +14,44 @@ export default class Api {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  getInfo() {
-    return fetch (`${this._baseUrl}/users/me`, {
-      headers: {
-        authorization: this._passkey
-      }
-    })
-    .then(this._checkResponse)
+  _request(url, options) {
+    return fetch(url, options)
+      .then(this._checkResponse)
   }
 
-  getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, {
+  getInfo() {
+    return this._request(`${this._baseUrl}/users/me`, {
       headers: {
         authorization: this._passkey
       }
     })
-    .then(this._checkResponse)
   }
+
+  // getInfo() {
+  //   return fetch (`${this._baseUrl}/users/me`, {
+  //     headers: {
+  //       authorization: this._passkey
+  //     }
+  //   })
+  //   .then(this._checkResponse)
+  // }
+
+  getInitialCards() {
+    return this._request(`${this._baseUrl}/cards`, {
+      headers: {
+        authorization: this._passkey
+      }
+    })
+  }
+
+  // getInitialCards() {
+  //   return fetch(`${this._baseUrl}/cards`, {
+  //     headers: {
+  //       authorization: this._passkey
+  //     }
+  //   })
+  //   .then(this._checkResponse)
+  // }
 
   setInfoProfile(data) {
     return fetch(`${this._baseUrl}/users/me`, {

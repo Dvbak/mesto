@@ -1,11 +1,11 @@
 /*  */
 
 export default class UserInfo {
-  constructor({userNameSelector, userAboutSelector, userAvatarSelector}, userId) {
+  constructor({userNameSelector, userAboutSelector, userAvatarSelector}) {
     this._profileName = document.querySelector(userNameSelector);
     this._profileAbout = document.querySelector(userAboutSelector);
     this._profileAvatar = document.querySelector(userAvatarSelector);
-    this._userId = userId; // Необходимо ли объявлять поле класса заранее, не имея еще его значения? Или же надо делать это через публичный метод setUserInfo только при получении значения.
+    this._userId = '';
   }
 
   getUserInfo() {

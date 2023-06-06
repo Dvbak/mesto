@@ -152,9 +152,10 @@ function handleDelCardFormSubmit(card, cardId) {
 Promise.all([api.getInfo(), api.getInitialCards()])
   .then(([dataUser, dataCards]) => {
     console.log(dataUser);
-    // console.log(dataCards);
+    console.log(dataCards);
     dataCards.forEach(card => card.myId = dataUser._id);
     userInfo.setUserInfo(dataUser);
+    // console.log(userInfo.getUserId());
     cardsList.renderAll(dataCards.reverse());
   })
   .catch(err => console.error('Ошибка загрузки страницы: ', err.message))
